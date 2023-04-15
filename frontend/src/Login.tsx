@@ -3,6 +3,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import EmailForm from './components/EmailForm';
 
 export const Login: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
@@ -16,22 +17,7 @@ export const Login: React.FC = () => {
 
   const [alertMsg, setAlertMsg] = useState('');
 
-  //This code is from https://github.com/rtivital, the developer of Mantine
-  const handleChange = (val: string) => {
-    window.clearTimeout(timeoutRef.current);
-    setEmail(val);
-    setData([]);
-
-    if (val.trim().length === 0 || val.includes('@')) {
-      setLoading(false);
-    } else {
-      setLoading(true);
-      timeoutRef.current = window.setTimeout(() => {
-        setLoading(false);
-        setData(['u.northwestern.edu'].map((provider) => `${val}@${provider}`));
-      }, 1000);
-    }
-  };
+  //This code for handleChange is from https://github.com/rtivital, the developer of Mantine
   const signUp = async() => {
     if (password !== confirmPassword) {
       alert("Passwords don't match!");
@@ -62,15 +48,7 @@ export const Login: React.FC = () => {
   }
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
-      <Autocomplete
-      style={{width: 350,}}
-      value={email}
-      data={data}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size="1rem" /> : null}
-      label="Email"
-      placeholder="Your email"
-      />
+      <EmailForm />
       <PasswordInput
       style={{width: 350,}}
       label="Password"
