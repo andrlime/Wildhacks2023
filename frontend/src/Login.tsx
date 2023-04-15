@@ -4,7 +4,7 @@ import './index.css';
 import { auth } from './firebase/firebase-config';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 
-export const App: React.FC = () => {
+export const Login: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -102,5 +102,5 @@ export const App: React.FC = () => {
   );
 }
 
-export default App;
+export default Login;
 
