@@ -1,6 +1,8 @@
 import { MantineProvider, Autocomplete, Loader } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
+import { auth } from '../../assets/firebase/firebase-config';
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 
 export const App: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
