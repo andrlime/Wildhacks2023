@@ -87,7 +87,7 @@ export const Signup: React.FC = () => {
 
   return (
     <div className='flex justify-center items-center align-middle w-full h-screen'>
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
           
           <div className='w-fit'>
             <Autocomplete
