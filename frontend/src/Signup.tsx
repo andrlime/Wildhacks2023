@@ -86,49 +86,54 @@ export const Signup: React.FC = () => {
   }, [isSignedIn])
 
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
-        <Autocomplete
-        style={{width: 350,}}
-        value={email}
-        data={data}
-        onChange={handleChange}
-        rightSection={loading ? <Loader size="1rem" /> : null}
-        label="Email"
-        placeholder="Your email"
-        />
-        <PasswordInput
-        style={{width: 350,}}
-        label="Password"
-        placeholder="Your password"
-        value={password}
-        onChange={(e) => {setPassword(e.target.value)}}
-        error={password.length > 6 ? "" : "Password must be at least 6 characters long"}
-        />
-        <PasswordInput
-        style={{width: 350,}}
-        label="Confirm Password"
-        placeholder="Confirm your password"
-        value={confirmPassword}
-        onChange={(e) => {setConfirmPassword(e.target.value)}}
-        error={confirmPassword === password ? "" : "Passwords don't match"}
-        />
-        <Button
-        style={{width: "fit-content", marginTop: 15}}
-        className='bg-purple-500 hover:bg-purple-700'
-        variant='filled'
-        color="violet"
-        title='Sign Up'
-        onClick={signUp}
+    <div className='flex justify-center items-center align-middle w-full h-screen'>
+      <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
+          
+          <div className='w-fit'>
+            <Autocomplete
+            style={{width: 350,}}
+            value={email}
+            data={data}
+            onChange={handleChange}
+            rightSection={loading ? <Loader size="1rem" /> : null}
+            label="Email"
+            placeholder="Your email"
+            />
+            <PasswordInput
+            style={{width: 350,}}
+            label="Password"
+            placeholder="Your password"
+            value={password}
+            onChange={(e) => {setPassword(e.target.value)}}
+            error={password.length > 6 ? "" : "Password must be at least 6 characters long"}
+            />
+            <PasswordInput
+            style={{width: 350,}}
+            label="Confirm Password"
+            placeholder="Confirm your password"
+            value={confirmPassword}
+            onChange={(e) => {setConfirmPassword(e.target.value)}}
+            error={confirmPassword === password ? "" : "Passwords don't match"}
+            />
+            <Button
+            style={{width: "fit-content", marginTop: 15}}
+            className='bg-purple-500 hover:bg-purple-700'
+            variant='filled'
+            color="violet"
+            title='Sign Up'
+            onClick={signUp}
 
-        >
-        Sign Up
-        </Button>
+            >
+            Sign Up
+            </Button>
 
-        <Text style={{fontSize: 13}}>
-            <Link to="/login">Already have an account? Log in!</Link>
-        </Text>
-        
-    </MantineProvider>
+            <Text style={{fontSize: 13}}>
+                <Link to="/login">Already have an account? Log in!</Link>
+            </Text>
+          </div>
+          
+      </MantineProvider>
+    </div>
   );
 }
 
