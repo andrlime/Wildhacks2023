@@ -16,7 +16,7 @@ export const Home: React.FC = () => {
     }
 
     return (
-        <MantineProvider theme={{ colorScheme: 'dark' }}>
+        <MantineProvider theme={{ colorScheme: 'light' }}>
             <Button
                 style={{width: "fit-content",}}
                 className='bg-purple-500 hover:bg-purple-700'
