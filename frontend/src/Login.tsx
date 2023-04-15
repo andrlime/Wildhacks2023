@@ -1,9 +1,13 @@
 import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
-import React, {useState, useEffect, useRef, createContext} from 'react';
+import React, {useState, useEffect, useRef, createContext, useContext} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import EmailForm from './components/EmailForm';
+
+export const EmailContext = createContext({});
+const PasswordContext = createContext({});
+const ConfirmPasswordContext = createContext({});
 
 export const Login: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
@@ -48,34 +52,36 @@ export const Login: React.FC = () => {
   }
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'dark'}}>
-      <EmailForm />
-      <PasswordInput
-      style={{width: 350,}}
-      label="Password"
-      placeholder="Your password"
-      value={password}
-      onChange={(e) => {setPassword(e.target.value)}}
-      error={password.length > 6 ? "" : "Password must be at least 6 characters long"}
-      />
-      <PasswordInput
-      style={{width: 350,}}
-      label="Confirm Password"
-      placeholder="Confirm your password"
-      value={confirmPassword}
-      onChange={(e) => {setConfirmPassword(e.target.value)}}
-      error={confirmPassword === password ? "" : "Passwords don't match"}
-      />
-      <Button
-      style={{width: "fit-content", marginTop: 15}}
-      className='bg-purple-500 hover:bg-purple-700'
-      variant='filled'
-      color="violet"
-      title='Sign Up'
-      onClick={signUp}
-      >
-      Sign Up
-      </Button>
-      
+        <EmailContext.Provider value={{email, setEmail}}>
+            <EmailForm />
+        </EmailContext.Provider>    
+        <PasswordInput
+        style={{width: 350,}}
+        label="Password"
+        placeholder="Your password"
+        value={password}
+        onChange={(e) => {setPassword(e.target.value)}}
+        error={password.length > 6 ? "" : "Password must be at least 6 characters long"}
+        />
+        <PasswordInput
+        style={{width: 350,}}
+        label="Confirm Password"
+        placeholder="Confirm your password"
+        value={confirmPassword}
+        onChange={(e) => {setConfirmPassword(e.target.value)}}
+        error={confirmPassword === password ? "" : "Passwords don't match"}
+        />
+        <Button
+        style={{width: "fit-content", marginTop: 15}}
+        className='bg-purple-500 hover:bg-purple-700'
+        variant='filled'
+        color="violet"
+        title='Sign Up'
+        onClick={signUp}
+        >
+        Sign Up
+        </Button>
+        
     </MantineProvider>
   );
 }
