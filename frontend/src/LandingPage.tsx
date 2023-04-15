@@ -87,7 +87,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function LandingPage() {
+export const LandingPage: React.FC = () => {
   const { classes } = useStyles();
 
   return (
