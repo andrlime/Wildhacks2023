@@ -1,14 +1,13 @@
 import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
-import React, {useState, useEffect, useRef, useContext, createContext} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../index.css';
-import { EmailContext } from '../Login.tsx';
 
 
 export default function EmailForm() {
     const timeoutRef = useRef<number>(-1);
+    const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<string[]>([]);
-    const {email, setEmail} = useContext(EmailContext);
     const handleChange = (val: string) => {
         window.clearTimeout(timeoutRef.current);
         setEmail(val);
