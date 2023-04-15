@@ -19,10 +19,53 @@ defmodule ClowderApp.SocketHandler do
     {:ok, state}
   end
 
+  ## Handle websocket requests
+  ## Based on the structure of the input JSON
   def websocket_handle({:text, json}, state) do
+    # IO.inspect(json, label: "Payload")
     case Jason.decode!(json) do
-      %{"msg" => message, "also" => also} ->
-        # IO.inspect(json, label: "Message")
+      %{
+        "area" => area,
+        "class" => class,
+        "location" => location,
+        "pinlatitude" => pinlatitude,
+        "pinlongitude" => pinlongitude,
+        "school" => school,
+        "showpin" => showpin,
+        "status" => status,
+        "subject" => subject,
+        "uuid" => uuid,
+        "timestamp" => timestamp,
+        "displayname" => displayname
+      } ->
+        output_map = %{
+          "area" => area,
+          "class" => class,
+          "location" => location,
+          "pinlatitude" => pinlatitude,
+          "pinlongitude" => pinlongitude,
+          "school" => school,
+          "showpin" => showpin,
+          "status" => status,
+          "subject" => subject,
+          "uuid" => uuid,
+          "timestamp" => timestamp,
+          "displayname" => displayname
+        }
+        output_json = Jason.encode!(output_map)
+
+        Registry.ClowderApp
+        |> Registry.dispatch(state.registry_key, fn entries ->
+          for {pid, _} <- entries do
+            if pid != self() do
+              Process.send(pid, output_json, [])
+            end
+          end
+        end)
+
+        {:reply, {:text, output_json}, state}
+
+      %{"msg" => message, "also" => also} -> # Test data structure
         output_map = %{"name" => message, "firstletter" => also}
         output_json = Jason.encode!(output_map)
 

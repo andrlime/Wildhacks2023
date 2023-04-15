@@ -21,7 +21,7 @@ defmodule ClowderApp do
         plug: ClowderApp.Router,
         options: [
           dispatch: dispatch(),
-          port: Application.fetch_env!(:clowder_app, :port)
+          port: 4000
         ]
       ),
       Registry.child_spec(
