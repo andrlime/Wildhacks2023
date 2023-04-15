@@ -8,7 +8,7 @@ defmodule ClowderApp.Router do
 
   plug(Plug.Static,
     at: "/",
-    from: :my_websocket_app
+    from: :clowder_app
   )
 
   plug(:match)

@@ -22,7 +22,7 @@ defmodule ClowderApp.SocketHandler do
   ## Handle websocket requests
   ## Based on the structure of the input JSON
   def websocket_handle({:text, json}, state) do
-    # IO.inspect(json, label: "Payload")
+    IO.inspect(json, label: "❎ Got request. Payload")
     case Jason.decode!(json) do
       %{
         "area" => area,
@@ -58,12 +58,12 @@ defmodule ClowderApp.SocketHandler do
         |> Registry.dispatch(state.registry_key, fn entries ->
           for {pid, _} <- entries do
             if pid != self() do
-              Process.send(pid, output_json, [])
+              Process.send(pid, output_json, []) # Send json to all processes
             end
           end
         end)
 
-        {:reply, {:text, output_json}, state}
+        {:reply, {:text, output_json}, state} # Reply with the json to all processes
 
       %{"msg" => message, "also" => also} -> # Test data structure
         output_map = %{"name" => message, "firstletter" => also}

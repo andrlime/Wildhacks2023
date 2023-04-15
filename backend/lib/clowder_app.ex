@@ -1,21 +1,9 @@
 defmodule ClowderApp do
-  @moduledoc """
-  Documentation for `ClowderApp`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ClowderApp.hello()
-      :world
-
-  """
   use Application
 
+  @spec start(any, any) :: {:error, any} | {:ok, pid}
   def start(_type, _args) do
-    children = [
+    children = [ # Start with a http process at port 4000 by default. Can be changed.
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: ClowderApp.Router,
@@ -30,6 +18,8 @@ defmodule ClowderApp do
       )
     ]
 
+    IO.puts("⚠️  Started app at port 4000")
+
     opts = [strategy: :one_for_one, name: ClowderApp.Application]
     Supervisor.start_link(children, opts)
   end
@@ -38,7 +28,7 @@ defmodule ClowderApp do
     [
       {:_,
        [
-         {"/ws/[...]", ClowderApp.SocketHandler, []},
+         {"/ws/[...]", ClowderApp.SocketHandler, []}, # Listens to requests from /ws/* and sends them to the socket handler
          {:_, Plug.Cowboy.Handler, {ClowderApp.Router, []}}
        ]}
     ]
