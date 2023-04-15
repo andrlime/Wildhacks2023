@@ -1,6 +1,8 @@
 import { MantineProvider, Autocomplete, Loader } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
+import './LandingPage';
+import LandingPage from './LandingPage';
 
 export const App: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
@@ -25,20 +27,24 @@ export const App: React.FC = () => {
     }
   };
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Autocomplete
-      style={{width: 350,}}
-      value={value}
-      data={data}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size="1rem" /> : null}
-      label="Email"
-      placeholder="Your email"
-      />
-      
-    </MantineProvider>
+    // <MantineProvider withGlobalStyles withNormalizeCSS>
+    //   <Autocomplete
+    //   style={{width: 350,}}
+    //   value={value}
+    //   data={data}
+    //   onChange={handleChange}
+    //   rightSection={loading ? <Loader size="1rem" /> : null}
+    //   label="Email"
+    //   placeholder="Your email"
+    //   />
+    // </MantineProvider>
+    <div>
+      <LandingPage />
+    </div>
   );
 }
+
+
 
 export default App;
 
