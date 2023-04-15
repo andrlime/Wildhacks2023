@@ -15,6 +15,10 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
+    path: "/poop",
+    element: <span>AAAA</span>
+  },
+  {
     path: "*",
     element: <App/>,
   }
