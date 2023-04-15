@@ -23,7 +23,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-clowder_test-*.tar
+clowder_app-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
