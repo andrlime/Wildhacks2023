@@ -28,7 +28,7 @@ defmodule ClowderApp do
     [
       {:_,
        [
-         {"/ws/[...]", ClowderApp.SocketHandler, []}, # Listens to requests from /ws/* and sends them to the socket handler
+         {"/ws/broadcast", ClowderApp.SocketHandler, []}, # Listens to requests from /ws/broadcast and sends them to the socket handler
          {:_, Plug.Cowboy.Handler, {ClowderApp.Router, []}}
        ]}
     ]
