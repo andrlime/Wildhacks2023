@@ -1,12 +1,42 @@
-import { MantineProvider } from '@mantine/core';
-import React from 'react';
+import { MantineProvider, Autocomplete, Loader } from '@mantine/core';
+import React, {useState, useEffect, useRef} from 'react';
 
 export const App: React.FC = () => {
+  const timeoutRef = useRef<number>(-1);
+  const [value, setValue] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<string[]>([]);
+
+  const handleChange = (val: string) => {
+    window.clearTimeout(timeoutRef.current);
+    setValue(val);
+    setData([]);
+
+    if (val.trim().length === 0 || val.includes('@')) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+      timeoutRef.current = window.setTimeout(() => {
+        setLoading(false);
+        setData(['u.northwestern.edu'].map((provider) => `${val}@${provider}`));
+      }, 1000);
+    }
+  };
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <div>Generic react app template</div>
+      <Autocomplete
+      style={{width: 300,}}
+      value={value}
+      data={data}
+      onChange={handleChange}
+      rightSection={loading ? <Loader size="1rem" /> : null}
+      label="Email"
+      placeholder="Your email"
+    />
     </MantineProvider>
   );
 }
 
 export default App;
+
