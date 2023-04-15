@@ -1,22 +1,6 @@
-// import React from 'react';
 import './LandingPage.css';
-//import {FeaturesImages} from './aboutsection';
+import { redirect, useNavigate } from 'react-router-dom';
 
-// const LandingPage = () => {
-//   return (
-//     <div className="landing-page">
-//       <img src="./images/cl wder.png" alt="Logo" className="logo" />
-//       <h1 className="company-name">Clowder</h1>
-//       <p className="description">Clowder is a live map for spotting Wildcats on Campus</p>
-//       <div className="buttons">
-//         <button className="sign-in">Sign In</button>
-//         <button className="sign-up">Sign Up</button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default LandingPage;
 
 
 import { createStyles, Container, Text, Button, Group, rem, LoadingOverlay } from '@mantine/core';
@@ -89,7 +73,7 @@ const useStyles = createStyles((theme) => ({
 
 export const LandingPage: React.FC = () => {
   const { classes } = useStyles();
-
+  const navigate = useNavigate();
   return (
     <div className={classes.wrapper}>
         <img src={require("./logo.png")} alt="Logo" className="logo" />
@@ -120,6 +104,7 @@ export const LandingPage: React.FC = () => {
             variant="default"
             className={classes.control}
             style={{marginRight: '50px'}}
+            onClick={() => navigate("/login")}
             //leftIcon={<GithubIcon size={20} />}
           >
             Log In
@@ -132,6 +117,7 @@ export const LandingPage: React.FC = () => {
             variant="default"
             className={classes.control}
             color="blue"
+            onClick={() => navigate("/signup")}
             //leftIcon={<GithubIcon size={20} />}
           >
             Sign Up
