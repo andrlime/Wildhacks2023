@@ -1,10 +1,11 @@
-import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
+import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
 import { signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { redirect, useNavigate } from 'react-router-dom';
+import { ButtonGroup } from '@mantine/core/lib/Button/ButtonGroup/ButtonGroup';
 
 
 export const Login: React.FC = () => {
@@ -108,6 +109,10 @@ const logIn = () => {
         >
         Login
         </Button>
+
+        <Text style={{fontSize: 13}}>
+            <Link to="/signup">Don't have an account? Sign Up!</Link>
+        </Text>
         
     </MantineProvider>
   );
