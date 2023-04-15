@@ -1,4 +1,4 @@
-import { MantineProvider, Autocomplete, Loader } from '@mantine/core';
+import { MantineProvider, Autocomplete, Loader } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 
 export const App: React.FC = () => {
@@ -7,6 +7,7 @@ export const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string[]>([]);
 
+  //This code is from https://github.com/rtivital, the developer of Mantine
   const handleChange = (val: string) => {
     window.clearTimeout(timeoutRef.current);
     setValue(val);
@@ -26,14 +27,15 @@ export const App: React.FC = () => {
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <div>Generic react app template</div>
       <Autocomplete
-      style={{width: 300,}}
+      style={{width: 350,}}
       value={value}
       data={data}
       onChange={handleChange}
       rightSection={loading ? <Loader size="1rem" /> : null}
       label="Email"
       placeholder="Your email"
-    />
+      />
+      
     </MantineProvider>
   );
 }
