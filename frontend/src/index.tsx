@@ -4,9 +4,9 @@ import './index.css';
 import App from './App';
 import Signup from './Signup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './Home';
 import Login from './Login';
 import LandingPage from './LandingPage';
+import { AppWrapper } from './Components/AppWrapper';
 
 const router = createBrowserRouter([
   {
@@ -22,13 +22,13 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "*",
-    element: <LandingPage/>,
+    path: "/formtest",
+    element: <AppWrapper/>
   },
   {
-    path: "/home",
-    element: <Home/>,
-  },
+    path: "*",
+    element: <App/>,
+  }
 ]);
 
 const root = ReactDOM.createRoot(
