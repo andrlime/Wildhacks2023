@@ -22,7 +22,7 @@ defmodule ClowderApp.SocketHandler do
   def websocket_handle({:text, json}, state) do
     case Jason.decode!(json) do
       %{"msg" => message, "also" => also} ->
-        IO.inspect(json, label: "Message")
+        # IO.inspect(json, label: "Message")
         output_map = %{"name" => message, "firstletter" => also}
         output_json = Jason.encode!(output_map)
 
