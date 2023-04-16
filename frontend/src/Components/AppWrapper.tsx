@@ -20,6 +20,7 @@ interface ClowderPacket {
     pinlongitude: string; // longitude of user's pin
     timestamp: number; // unix timestamp
     displayname: string; // the user's name
+    message: string
 }
 
 type ClowderHashMap = Record<string, ClowderPacket>;
@@ -47,11 +48,11 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
 
     useEffect(() => {
         if (lastMessage !== null) {
-        let p = messageHistory;
-        messageHistory.push(JSON.parse(lastMessage.data));
-        setMessageHistory(p);
-        let packets = getUniquePackets(p);
-        callback(packets);
+            let p = messageHistory;
+            messageHistory.push(JSON.parse(lastMessage.data));
+            setMessageHistory(p);
+            let packets = getUniquePackets(p);
+            callback(packets);
         }
     }, [lastMessage]);
 
@@ -103,11 +104,10 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
         const sortedPackets = filteredPackets.sort((a, b) => a.timestamp - b.timestamp); // sort from oldest to newest
     
         return sortedPackets.reduce<ClowderHashMap>((map, packet) => {
-        map[packet.uuid] = packet;
-        return map;
+            map[packet.uuid] = packet;
+            return map;
         }, {});
     }
-    ////
 
     // const connectionStatus = {
     //     [ReadyState.CONNECTING]: 'Connecting',
@@ -122,16 +122,16 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
             <div className="flex flex-col justify-between align-middle items-center m-1 p-1"><TextInput className="w-full" placeholder={"Search"}/></div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Filter</span>
-                <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/>
-                <Select label="Location" placeholder="Pick a building" data={buildings}/>
+                {/* <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/> */}
+                <Select label="Building" placeholder="Pick a building" data={buildings}/>
                 <Select label="Subject" placeholder="Pick a subject" data={subjects}/>
-                <TextInput label="Class" placeholder="Type a class number" type={"number"} value={classNumber || ""} onChange={(e: any) => setClassNumber(parseInt(e.target.value) || null)}/>
+                <TextInput label="Class" placeholder="Type a class name" type={"number"} value={classNumber || ""} onChange={(e: any) => setClassNumber(parseInt(e.target.value) || null)}/>
             </div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Join the clowd!</span>
                 <TextInput required error={!className ? "Enter a class name" : ""} label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
-                <TextInput required error={!subject ? "Enter a subject" : ""} label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e.target.value)} className="m-1"/>
-                <TextInput required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e.target.value)} className="m-1"/>
+                <Select required error={!subject ? "Enter a subject" : ""} label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e + "")} className="m-1" data={subjects}/>
+                <Select required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e + "")} className="m-1" data={buildings}/>
                 <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <TextInput required error={!displayName ? "Enter a display name" : ""} label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
                 <TextInput required error={!position ? "Click on the map!" : ""} disabled value={position ? `${position.lat} ${position.lon}` : ""} label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
@@ -168,10 +168,6 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
 
         setUuid(user_id);
     },[auth, navigate]);
-
-    useEffect(() => {
-        console.log(showMap);
-    },[showMap]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full h-screen">

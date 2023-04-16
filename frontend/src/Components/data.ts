@@ -23,7 +23,7 @@ export const buildings = [
     {value: "cahn", label: "Cahn Auditorium"},
     {value: "searle", label: "Searle Hall"},
     {value: "ford", label: "Ford Design Center"},
-    {value: "mudd", label: "Mudd Librari"},
+    {value: "mudd", label: "Mudd Library"},
     {value: "kresge", label: "Kresge Hall"},
     {value: "swift", label: "Swift Hall"},
 ];

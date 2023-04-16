@@ -1,7 +1,7 @@
 import '../leaflet.css';
 import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaflet';
 import L, { LeafletMouseEvent } from "leaflet";
-import DEMO_IMAGE from './demo.png';
+import PIN from './pin.png';
 import React, { useEffect } from 'react';
 
 interface ClowderPacket {
@@ -16,7 +16,8 @@ interface ClowderPacket {
     pinlatitude: string; // latitude of user's pin
     pinlongitude: string; // longitude of user's pin
     timestamp: number; // unix timestamp
-    displayname: string; // the user's name
+    displayname: string; // the user's name,
+    message: string;
 }
 
 type ClowderHashMap = Record<string, ClowderPacket>;
@@ -33,12 +34,9 @@ const OutsideMapComponent: React.FC<{c: Function}> = ({c}) => {
 
 export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null}> = ({s, cb, cloud}) => {
     const myIcon = L.icon({
-        iconUrl: DEMO_IMAGE,
-        iconSize: [40, 40],
-        iconAnchor: [20, 20],
+        iconUrl: PIN,
+        iconSize: [55, 55],
     });
-
-    console.log(cloud);
 
     if(s.showMap) {
         return (
@@ -52,7 +50,8 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null}>
                         {Object.keys(cloud).map(e => (
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
-                                CS 211. <br /> 1 person is studying here.
+                                    <div className='font-bold'>{cloud[e].displayname} - {cloud[e].class}</div>
+                                    <div>{cloud[e].message}</div>
                                 </Popup>
                             </Marker>
                         ))}
