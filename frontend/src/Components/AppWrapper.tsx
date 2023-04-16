@@ -5,6 +5,7 @@ import { buildings, subjects } from "./data";
 //import { auth } from "../firebase/firebase-config";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Map from "./Map";
 
 interface ClowderPacket {
     uuid: string; // User ID
@@ -155,8 +156,9 @@ export const AppWrapper: React.FC = () => {
             <FilterForm uuid={uuid} callback={setClowdCallback}/>
             
             <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
-                <div className="rounded-xl border-gray-300 border-4 p-4 h-full">
-                    {clowd ? Object.keys(clowd) : ""}
+                <div className="rounded-xl border-gray-300 border-4 h-full relative">
+                    {/*clowd ? Object.keys(clowd) : ""*/}
+                    <Map/>
                 </div>
             </div>
         </div>
