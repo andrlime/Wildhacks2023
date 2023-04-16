@@ -5,6 +5,7 @@ import { auth } from './firebase/firebase-config';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import logo from './Components/logo.png';
 
 
 export const Login: React.FC = () => {
@@ -75,9 +76,13 @@ const logIn = () => {
   }, [isSignedIn, navigate])
 
   return (
-    <div className='flex justify-center items-center align-middle w-full h-screen'>
+    <div className='flex flex-col justify-center items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
+        <img src={logo} alt='Clowder Logo'/>
         <div className='w-fit'>
+        <div className='absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
+              onClick={() => navigate("/")}>&#8678;&nbsp;&nbsp;<span 
+              className='text-lg'>Go Back</span></div>
           <Autocomplete
           style={{width: 350,}}
           value={email}
