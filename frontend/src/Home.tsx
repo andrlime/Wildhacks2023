@@ -9,6 +9,7 @@ import AppWrapper from './Components/AppWrapper';
 import { FooterSimple } from './footer';
 import {UserProfile} from './UserProfile';
 import Profile from './Profile';
+import About from './About';
 
 
 export const Home: React.FC = () => {
@@ -38,12 +39,12 @@ export const Home: React.FC = () => {
                             setShowMapState(true);
                         }} title="Profile" centered>
                         <Profile user={userProfile} updateUser={setUserProfile}/>
-                    </Modal>
+                    </Modal>    
                     <Modal opened={aboutOpened} onClose={() => {
                             closeAbout();
                             setShowMapState(true);
-                        }} title="About" centered>
-                        {/*Modal Content*/}
+                        }} size="lg" title="About" centered>
+                        <About/>
                     </Modal>
                     <Button
                         style={{width: "fit-content",}}
