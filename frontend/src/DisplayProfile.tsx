@@ -1,4 +1,4 @@
-import { Modal, MantineProvider, Button} from '@mantine/core';
+import { MantineProvider, Button} from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import {UserProfile} from './UserProfile'
 

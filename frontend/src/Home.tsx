@@ -19,10 +19,10 @@ export const Home: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const signOut = () => {
-        auth.signOut();
-        setTimeout(() => navigate("/login"), 5);
-    }
+    // const signOut = () => {
+    //     auth.signOut();
+    //     setTimeout(() => navigate("/login"), 5);
+    // }
 
     const [userProfile, setUserProfile] = useState(new UserProfile("Willie Wildcat", "williewildcat2026@u.northwestern.edu", "McCormick", "IE", "123-456-7890", "Tech Atrium"));
 

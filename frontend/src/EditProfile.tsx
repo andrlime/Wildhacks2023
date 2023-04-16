@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 import {UserProfile} from './UserProfile'
-import { Modal, MantineProvider, Button} from '@mantine/core';
+import { MantineProvider, Button} from '@mantine/core';
 import './Profile.css'
 
 interface SaveProfileFunc
