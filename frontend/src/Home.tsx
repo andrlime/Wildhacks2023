@@ -1,10 +1,8 @@
-import { MantineProvider, Modal, Group, TextInput, PasswordInput, Button } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
-import React, {useState, useEffect, useRef} from 'react';
+import { MantineProvider, Modal, Button } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
+import React, { useState } from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
 import AppWrapper from './Components/AppWrapper';
