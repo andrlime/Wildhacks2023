@@ -11,3 +11,5 @@
 - Show pin: boolean, whether the person has a pin or not on the map
 - Pin lat/lon: self explanatory
 - Timestamp
+- Message
+- Display name

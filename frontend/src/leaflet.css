@@ -1,0 +1,10 @@
+@import url('https://unpkg.com/leaflet@1.9.3/dist/leaflet.css');
+
+.map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+  #map { height: 180px; }

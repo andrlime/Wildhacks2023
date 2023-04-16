@@ -38,7 +38,9 @@ defmodule ClowderApp.SocketHandler do
         "subject" => subject,
         "uuid" => uuid,
         "timestamp" => timestamp,
-        "displayname" => displayname
+        "displayname" => displayname,
+        "message" => message,
+        "contact" => contact
       } ->
         output_map = %{ # Specify format for return data
           "area" => area,
@@ -52,7 +54,9 @@ defmodule ClowderApp.SocketHandler do
           "subject" => subject,
           "uuid" => uuid,
           "timestamp" => timestamp,
-          "displayname" => displayname
+          "displayname" => displayname,
+          "message" => message,
+          "contact" => contact
         }
         output_json = Jason.encode!(output_map)
 

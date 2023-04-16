@@ -46,7 +46,7 @@ export function FooterSimple({ links }: FooterSimpleProps) {
   ));
 
   return (
-    <div className={classes.footer + " absolute bottom-0 invisible sm:visible w-full"}>
+    <div className={classes.footer + " invisible sm:visible w-full"}>
       <Container className={classes.inner}>
         <Image src={LOGO} style={{width: '100px'}}/>
         <Group className={classes.links}>{items}</Group>
