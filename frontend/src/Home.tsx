@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
         <MantineProvider theme={{ colorScheme: 'light' }}>
             <div className='flex justify-between pt-4'>
                 <div>
-                    <img src={logo} className='pl-6' alt = "Clowder Logo" width={172}/>
+                    <img src={logo} className='pl-6' alt = "Clowder Logo" width={172} onClick={() => navigate('/')}/>
                 </div>
                 <div>
                     <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
