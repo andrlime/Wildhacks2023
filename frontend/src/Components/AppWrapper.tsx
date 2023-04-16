@@ -37,7 +37,7 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
     const [message, setMessage] = React.useState("");
     const [contactMethod, setContactMethod] = React.useState("");
 
-    const wsURI = "10.105.183.137:4000";
+    const wsURI = "10.105.183.137:4000"; // Is this my IP? Sorta, it's my Eduroam IP
     const websocketUrl = `ws://${wsURI}/ws/broadcast`;
     const [messageHistory, setMessageHistory] = useState<Array<ClowderPacket>>([]);
     const { sendMessage, lastMessage } = useWebSocket(websocketUrl, {

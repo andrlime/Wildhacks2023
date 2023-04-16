@@ -2,7 +2,7 @@ import '../leaflet.css';
 import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaflet';
 import L from "leaflet";
 import PIN from './pin.png';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { getBuildingName } from './data';
 
 interface ClowderPacket {
@@ -40,7 +40,11 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
         iconSize: [55, 55],
     });
 
+    const [blocked, setBlocked] = React.useState([""]);
 
+    useEffect(() => {
+        console.log(blocked);
+    },[blocked]);
 
     if(s.showMap) {
         return (
@@ -52,13 +56,14 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
                     />
                     {cloud ? <>
                         {Object.keys(cloud).filter(e => {
+                            if(blocked.includes(e)) return false;
                             if(filter[0] === "" && filter[1] === "" && filter[2] === "") return true;
-                            
+
                             let buildingMatch = cloud[e].location === filter[0];
                             let subjectMatch = cloud[e].subject === filter[1];
                             let genericTextMatch = ((cloud[e].class.toLowerCase().includes(filter[2].toLowerCase()) || cloud[e].message.toLowerCase().includes(filter[2].toLowerCase()))) && filter[2] !== "";
 
-                            return buildingMatch || subjectMatch || genericTextMatch;
+                            return (buildingMatch || subjectMatch || genericTextMatch)
                         }).map(e => (
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
@@ -68,7 +73,9 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
                                     <div>Status: {cloud[e].status}</div>
                                     <div>Message: {cloud[e].message}</div>
                                     <div>Contact: {cloud[e].contact}</div>
-                                    <div><span className='font-bold hover:cursor-pointer'>⚠️ Report User</span></div>
+                                    <div><span onClick={() => {
+                                        setBlocked([...blocked, e]);
+                                    }} className='font-bold hover:cursor-pointer'>⚠️ Report User</span></div>
                                 </Popup>
                             </Marker>
                         ))}
