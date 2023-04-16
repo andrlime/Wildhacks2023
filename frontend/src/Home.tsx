@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { redirect, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
+import AppWrapper from './Components/AppWrapper';
 
 
 export const Home: React.FC = () => {
@@ -54,6 +55,7 @@ export const Home: React.FC = () => {
                     </Button>
                 </div>
             </div>
+            <AppWrapper/>
         </MantineProvider>
     );
 }
