@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                     <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
-                        <Profile/>
+                        <Profile user={userProfile} updateUser={setUserProfile}/>
                     </Modal>
                     <Modal opened={aboutOpened} onClose={closeAbout} title="About" centered>
                         {/*Modal Content*/}

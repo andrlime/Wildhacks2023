@@ -17,22 +17,22 @@ const DisplayProfile : React.FunctionComponent<DisplayProfileProps> = (props) =>
             <MantineProvider>
                 <p><b>Name: </b></p>
                 <p>{userProfile.name}</p>
-                <br/><br/>
+                <br/>
                 <p><b>Email:</b></p>
                 <p>{userProfile.email}</p>
-                <br/><br/>
+                <br/>
                 <p><b>School: </b></p>
                 <p>{userProfile.school}</p>
-                <br/><br/>
+                <br/>
                 <p><b>Major:</b></p>
                 <p>{userProfile.major}</p>
-                <br/><br/>
+                <br/>
                 <p><b>Phone number: </b></p>
                 <p>{userProfile.phone}</p>
-                <br/><br/>
+                <br/>
                 <p><b>Favorite study spot:</b></p>
                 <p>{userProfile.favStudySpot}</p>
-                <br/><br/>
+                <br/>
                 <div>
                 <Button
                     style={{width: "fit-content",}}
