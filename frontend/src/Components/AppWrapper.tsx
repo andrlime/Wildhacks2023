@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Button, SegmentedControl, Switch, Select } from '@mantine/core';
+import { TextInput, Button, Switch, Select } from '@mantine/core';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
 const FilterForm: React.FC = () => {
