@@ -15,6 +15,7 @@ export const Home: React.FC = () => {
     const [showMapState, setShowMapState] = useState(true);
 
     const navigate = useNavigate();
+
     const signOut = () => {
         auth.signOut();
         setTimeout(() => navigate("/login"), 5);
@@ -26,7 +27,7 @@ export const Home: React.FC = () => {
                 <div>
                     <img src={logo} className='pl-6 hover:cursor-pointer' alt = "Clowder Logo" width={172} onClick={() => navigate('/')}/>
                 </div>
-                <div>
+                <div className='flex flex-row'>
                     <Modal opened={profileOpened} onClose={() => {
                             closeProfile();
                             setShowMapState(true);
@@ -41,7 +42,7 @@ export const Home: React.FC = () => {
                     </Modal>
                     <Button
                         style={{width: "fit-content",}}
-                        className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
+                        className='hover:bg-purple-700 self-end m-3 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-xl mr-6'
                         variant='filled'
                         color="violet"
                         title='About'
@@ -55,7 +56,7 @@ export const Home: React.FC = () => {
                     </Button>
                     <Button
                         style={{width: "fit-content",}}
-                        className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
+                        className='hover:bg-purple-700 self-end m-3 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-xl mr-6'
                         variant='filled'
                         color="violet"
                         title='Profile'

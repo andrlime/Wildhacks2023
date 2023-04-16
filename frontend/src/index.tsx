@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import Signup from './Signup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './Login';
 import LandingPage from './LandingPage';
-import { AppWrapper } from './Components/AppWrapper';
 import { Home } from './Home';
 
 const router = createBrowserRouter([

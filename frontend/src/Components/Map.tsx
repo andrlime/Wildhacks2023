@@ -1,8 +1,8 @@
 import '../leaflet.css';
 import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaflet';
-import L, { LeafletMouseEvent } from "leaflet";
+import L from "leaflet";
 import PIN from './pin.png';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 interface ClowderPacket {
     uuid: string; // User ID
