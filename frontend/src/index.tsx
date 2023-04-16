@@ -7,11 +7,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './Login';
 import LandingPage from './LandingPage';
 import { AppWrapper } from './Components/AppWrapper';
+import MapPage from './MapPage'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage/>,
+    element: <MapPage/>,
   },
   {
     path: "/signup",
@@ -36,7 +37,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
     <RouterProvider router={router}/>
-  </React.StrictMode>
 );
