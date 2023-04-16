@@ -2,14 +2,12 @@ import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text } fr
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
-import { signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { ButtonGroup } from '@mantine/core/lib/Button/ButtonGroup/ButtonGroup';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { FooterSimple } from './footer';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
 import catsvg from './Components/undraw_cat_epte.svg';
-import { FooterSimple } from './footer';
 
 
 

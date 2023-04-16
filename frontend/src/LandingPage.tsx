@@ -1,12 +1,12 @@
 import './LandingPage.css';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {FooterSimple} from './footer'
 
 import BACKGROUND from './background.png';
 import DEMO_IMAGE from './Components/demo.png';
 
 
-import { createStyles, Container, Text, Button, Group, rem, LoadingOverlay } from '@mantine/core';
+import { createStyles, Container, Text, Button, rem } from '@mantine/core';
 import React from 'react';
 
 
@@ -130,7 +130,7 @@ export const LandingPage: React.FC = () => {
 
         </div>
       </Container>
-      <div className='flex w-full justify-center h-[70vh]'>
+      <div className='flex w-full justify-center h-[70vh] pb-16'>
         <div className='bg-red-200 m-4 aspect-square max-w-[600px]' style={{backgroundImage: `url(${DEMO_IMAGE})`, backgroundSize: "cover"}}></div>
       </div>
       {/* <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '100%', maxWidth: "800px" }} src={DEMO_IMAGE} alt="demo"/> */}
