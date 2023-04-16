@@ -2,6 +2,7 @@ import './LandingPage.css';
 import { redirect, useNavigate } from 'react-router-dom';
 import {FooterSimple} from './footer'
 import DEMO_IMAGE from './demo.png';
+import BACKGROUND from './background.png';
 
 
 import { createStyles, Container, Text, Button, Group, rem, LoadingOverlay } from '@mantine/core';
@@ -77,8 +78,8 @@ export const LandingPage: React.FC = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   return (
-    <div className={classes.wrapper}>
-        <img src={require("./logo.png")} alt="Logo" className="logo" />
+    <div className={classes.wrapper} style={{backgroundImage:`url(${BACKGROUND})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}} >
+        <img src={require("./logo.png")} alt="Logo" className="logo"/>
       <Container size={700} className={classes.inner}>
         
         <h1 className={classes.title} style={{textAlign: "center"}}>

@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'f
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { redirect, useNavigate } from 'react-router-dom';
 import { ButtonGroup } from '@mantine/core/lib/Button/ButtonGroup/ButtonGroup';
+import { FooterSimple } from './footer';
 
 
 export const Login: React.FC = () => {
@@ -80,7 +81,7 @@ const logIn = () => {
   }, [isSignedIn])
 
   return (
-    <div className='flex justify-center items-center align-middle w-full h-screen'>
+    <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
         <div className='w-fit'>
           <Autocomplete
@@ -118,6 +119,7 @@ const logIn = () => {
         </div>
           
       </MantineProvider>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
     </div>
   );
 }
