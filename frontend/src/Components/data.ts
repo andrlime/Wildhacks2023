@@ -67,7 +67,7 @@ export const subjects = [
     {value: "THTR", label: "Theatre"},
     {value: "RTVF", label: "Radio, TV, and Film"},
     {value: "WLIT", label: "World Literature"}
-].sort((a,b) => a.value.localeCompare(b.value));
+].sort((a,b) => a.label.localeCompare(b.label));
 
 export const buildings = [
     {value: "Annenberg", label: "Annenberg Hall"},
@@ -95,7 +95,7 @@ export const buildings = [
     {value: "Wirtz", label: "Wirtz Hall"},
     {value: "FrancesSearle", label: "Frances Searle Building"},
     {value: "Mudd", label: "Mudd Library"}
-].sort((a,b) => a.value.localeCompare(b.value));
+].sort((a,b) => a.label.localeCompare(b.label));
 
 export const getBuildingName = (str: string) => {
     for(let i of buildings) {
