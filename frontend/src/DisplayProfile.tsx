@@ -1,6 +1,7 @@
 import { Modal, MantineProvider, Button} from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import {UserProfile} from './UserProfile'
+import { auth } from './firebase/firebase-config';
 
 type DisplayProfileProps =
 {
@@ -12,6 +13,17 @@ const DisplayProfile : React.FunctionComponent<DisplayProfileProps> = (props) =>
     const userProfile = props.userProfile;
     const editProfileFunc = props.onClick;
     const navigate = useNavigate();
+
+    const signOut = () => {
+        auth.signOut()
+          .then(() => {
+            console.log('User signed out!');
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+        navigate("/LandingPage");
+      }
 
     return (
             <MantineProvider>
@@ -50,7 +62,7 @@ const DisplayProfile : React.FunctionComponent<DisplayProfileProps> = (props) =>
                         variant='filled'
                         color="violet"
                         title='Sign Out'
-                        onClick={() => navigate("/LandingPage")}
+                        onClick={signOut}
                         >
                         Sign Out
                     </Button>
