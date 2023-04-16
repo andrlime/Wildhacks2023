@@ -12,7 +12,7 @@ export const Map: React.FC = () => {
 
     return (
         <div>
-            <MapContainer className="map-container rounded-xl" center={[42.056, -87.675]} zoom={16} scrollWheelZoom={false}>
+            <MapContainer className="map-container" center={[42.056, -87.675]} zoom={16} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
