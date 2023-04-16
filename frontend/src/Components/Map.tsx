@@ -61,7 +61,7 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
 
                             let buildingMatch = cloud[e].location === filter[0];
                             let subjectMatch = cloud[e].subject === filter[1];
-                            let genericTextMatch = ((cloud[e].class.toLowerCase().includes(filter[2].toLowerCase()) || cloud[e].message.toLowerCase().includes(filter[2].toLowerCase()))) && filter[2] !== "";
+                            let genericTextMatch = (((cloud[e].class + "").toLowerCase().includes(filter[2].toLowerCase()) || (cloud[e].message + "").toLowerCase().includes(filter[2].toLowerCase()))) && filter[2] !== "";
 
                             return (buildingMatch || subjectMatch || genericTextMatch)
                         }).map(e => (

@@ -24,7 +24,8 @@ defmodule ClowderApp.SocketHandler do
   ## Modified from https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778
   ## Referenced Elixir docs
   def websocket_handle({:text, json}, state) do
-    IO.inspect(json, label: "❎ Got request. Payload") # Output to console
+    IO.puts("❎ Got request") # Output to console
+
     case Jason.decode!(json) do
       %{ # Specify input data
         "area" => area,
@@ -58,6 +59,15 @@ defmodule ClowderApp.SocketHandler do
           "message" => message,
           "contact" => contact
         }
+
+        IO.puts(uuid)
+        IO.puts(subject)
+        IO.puts(class)
+        IO.puts(location)
+        IO.puts(message)
+        IO.puts(contact)
+        IO.puts("\n")
+
         output_json = Jason.encode!(output_map)
 
         Registry.ClowderApp
