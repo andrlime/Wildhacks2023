@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaf
 import L from "leaflet";
 import PIN from './pin.png';
 import React from 'react';
+import { buildings, getBuildingName } from './data';
 
 interface ClowderPacket {
     uuid: string; // User ID
@@ -32,7 +33,7 @@ const OutsideMapComponent: React.FC<{c: Function}> = ({c}) => {
     return <></>;
 }
 
-export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null}> = ({s, cb, cloud}) => {
+export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, filter: [string, string, string]}> = ({s, cb, cloud, filter}) => {
     const myIcon = L.icon({
         iconUrl: PIN,
         iconSize: [55, 55],
@@ -47,10 +48,18 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null}>
                         url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                     />
                     {cloud ? <>
-                        {Object.keys(cloud).map(e => (
+                        {Object.keys(cloud).filter(e => {
+                            if(filter[0] === "" && filter[1] === "" && filter[2] === "") return true;
+                            
+                            let buildingMatch = cloud[e].location === filter[0];
+                            let subjectMatch = cloud[e].subject === filter[1];
+                            let genericTextMatch = ((cloud[e].class.toLowerCase().includes(filter[2].toLowerCase()) || cloud[e].message.toLowerCase().includes(filter[2].toLowerCase()))) && filter[2] !== "";
+
+                            return buildingMatch || subjectMatch || genericTextMatch;
+                        }).map(e => (
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
-                                    <div className='font-bold'>{cloud[e].displayname} - {cloud[e].class}</div>
+                                    <div className='font-bold'>{cloud[e].displayname} - {cloud[e].class} at {(getBuildingName(cloud[e].location))}</div>
                                     <div>{cloud[e].message}</div>
                                 </Popup>
                             </Marker>

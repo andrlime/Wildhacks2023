@@ -27,9 +27,7 @@ type ClowderHashMap = Record<string, ClowderPacket>;
 
 type Position = {lat: number, lon: number};
 
-const FilterForm: React.FC<{uuid: string, callback: Function, position: Position | null}> = ({uuid, callback, position}) => {
-    const [classNumber, setClassNumber] = React.useState<number | null>();
-
+const FilterForm: React.FC<{uuid: string, callback: Function, position: Position | null, setFilter: Function}> = ({uuid, callback, position, setFilter}) => {
     const [className, setClassName] = React.useState("");
     const [subject, setClassSubject] = React.useState("");
     const [location, setLocation] = React.useState("");
@@ -75,7 +73,7 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
             try {
                 sendMessage(JSON.stringify(
                     {
-                        "uuid": displayName, // change to uuid
+                        "uuid": uuid, // change to uuid
                         "class": className,
                         "subject": subject,
                         "location": location,
@@ -117,15 +115,28 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
     //     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
     // }[readyState];
 
+    const [filter_b, set_f_b] = useState("");
+    const [filter_s, set_f_s] = useState("");
+    const [filter_c, set_f_c] = useState("");
+
     return (
         <div className="lg:w-1/5 w-full p-4 lg:m-4 rounded-xl border-gray-300 border-4 overflow-scroll">
             {/* <div className="flex flex-col justify-between align-middle items-center m-1 p-1"><TextInput className="w-full" placeholder={"Search"}/></div> */}
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Filter</span>
                 {/* <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/> */}
-                <Select label="Building" placeholder="Pick a building" data={buildings}/>
-                <Select label="Subject" placeholder="Pick a subject" data={subjects}/>
-                <TextInput label="Class" placeholder="Type a class name" type={"number"} value={classNumber || ""} onChange={(e: any) => setClassNumber(parseInt(e.target.value) || null)}/>
+                <Select label="Building" placeholder="Pick a building" data={buildings} value={filter_b} onChange={(e) => {
+                    set_f_b(e + "");
+                    setFilter(e + "", filter_s, filter_c);
+                }} />
+                <Select label="Subject" placeholder="Pick a subject" data={subjects} value={filter_s} onChange={(e) => {
+                    set_f_s(e + "");
+                    setFilter(filter_b, e + "", filter_c);
+                }} />
+                <TextInput label="Class" placeholder="Type a class name" value={filter_c} onChange={(e) => {
+                    set_f_c(e.target.value + "");
+                    setFilter(filter_b, filter_s, e + "");
+                }}/>
             </div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Join the clowd!</span>
@@ -156,6 +167,8 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
     const setPosnCallback = (position: Position) => {
         setPosn(position);
     }
+
+    const [filter, setFilter] = useState<[string, string, string]>();
     
     useEffect(() => {
         const user = auth.currentUser;
@@ -171,11 +184,13 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
 
     return (
         <div className="flex flex-col lg:flex-row w-full h-screen">
-            <FilterForm position={posn ? posn : null} uuid={uuid} callback={setClowdCallback}/>
+            <FilterForm position={posn ? posn : null} uuid={uuid} callback={setClowdCallback} setFilter={(building: string, subject: string, classN: string) => {
+                setFilter([building, subject, classN]);
+            }}/>
             
             <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
                 <div className="rounded-xl border-gray-300 border-4 h-[50vh] lg:h-screen relative">
-                    <Map cb={setPosnCallback} s={showMap} cloud={clowd || null}/>
+                    <Map cb={setPosnCallback} s={showMap} cloud={clowd || null} filter={filter || ["", "", ""]}/>
                 </div>
             </div>
         </div>

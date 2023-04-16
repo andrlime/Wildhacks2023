@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
 import AppWrapper from './Components/AppWrapper';
+import { FooterSimple } from './footer';
 
 
 export const Home: React.FC = () => {
@@ -71,6 +72,7 @@ export const Home: React.FC = () => {
                 </div>
             </div>
             <AppWrapper showMap={showMapState}/>
+            <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
         </MantineProvider>
     );
 }
