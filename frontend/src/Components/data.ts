@@ -78,7 +78,7 @@ export const buildings = [
     {value: "Kresge", label: "Kresge Hall"},
     {value: "Ford", label: "Ford Motor Company Engineering Design Center"},
     {value: "Kellogg", label: "Kellogg Global Hub"},
-    {value: "RyanCtr", label: "Patrick G. and Shirley W. Ryan Center for the Musical Arts"},
+    {value: "RyanHall", label: "Ryan Hall"},
     {value: "Crowe", label: "Crowe Hall"},
     {value: "Swift", label: "Swift Hall"},
     {value: "Fisk", label: "Fisk Hall"},
@@ -93,7 +93,8 @@ export const buildings = [
     {value: "JacobsCtr", label: "Josephine B. and Mortimer J. Jacobs Center"},
     {value: "PickStaiger", label: "Pick-Staiger Concert Hall"},
     {value: "Wirtz", label: "Wirtz Hall"},
-    {value: "FrancesSearle", label: "Frances Searle Building"}
+    {value: "FrancesSearle", label: "Frances Searle Building"},
+    {value: "Mudd", label: "Mudd Library"}
 ].sort((a,b) => a.value.localeCompare(b.value));
 
 export const getBuildingName = (str: string) => {
