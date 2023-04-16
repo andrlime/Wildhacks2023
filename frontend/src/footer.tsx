@@ -1,5 +1,5 @@
 import { createStyles, Container, Group, Anchor, rem, Image } from '@mantine/core';
-import LOGO from "./logo.png";
+import LOGO from "./Components/logo.png";
 import React from 'react';
 import './LandingPage.css';
 

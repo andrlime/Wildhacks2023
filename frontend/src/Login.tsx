@@ -1,12 +1,14 @@
-import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
+import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
 import { signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { redirect, useNavigate } from 'react-router-dom';
 import { ButtonGroup } from '@mantine/core/lib/Button/ButtonGroup/ButtonGroup';
 import { FooterSimple } from './footer';
+import { BrowserRouter as _, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import logo from './Components/logo.png';
+
 
 
 export const Login: React.FC = () => {
@@ -15,11 +17,7 @@ export const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string[]>([]);
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
-
-  const [alertMsg, setAlertMsg] = useState('');
 
   //This code is from https://github.com/rtivital, the developer of Mantine
   const handleChange = (val: string) => {
@@ -78,12 +76,16 @@ const logIn = () => {
             navigate("/home");
         }
     })
-  }, [isSignedIn])
+  }, [isSignedIn, navigate])
 
   return (
     <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
+        <img src={logo} alt='Clowder Logo'/>
         <div className='w-fit'>
+        <div className='absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
+              onClick={() => navigate("/")}>&#8678;&nbsp;&nbsp;<span 
+              className='text-lg'>Go Back</span></div>
           <Autocomplete
           style={{width: 350,}}
           value={email}
@@ -99,7 +101,7 @@ const logIn = () => {
           placeholder="Your password"
           value={password}
           onChange={(e) => {setPassword(e.target.value)}}
-          error={password.length > 6 && password.length !== 0 ? "" : "Password must be at least 6 characters long"}
+          error={password.length < 6 && password.length !== 0 ? "Password must be at least 6 characters long" : ""}
           />
           <Button
           style={{width: "fit-content", marginTop: 15}}
