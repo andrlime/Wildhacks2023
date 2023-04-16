@@ -38,7 +38,7 @@ export const Home: React.FC = () => {
                         className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
                         variant='filled'
                         color="violet"
-                        title='Sign Out'
+                        title='About'
                         onClick={openAbout}
                         >
                         About
@@ -48,7 +48,7 @@ export const Home: React.FC = () => {
                         className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
                         variant='filled'
                         color="violet"
-                        title='Sign Out'
+                        title='Profile'
                         onClick={openProfile}
                         >
                         Profile
