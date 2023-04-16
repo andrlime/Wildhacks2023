@@ -1,36 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Button, Switch, Select } from '@mantine/core';
-import useWebSocket, { ReadyState } from "react-use-websocket";
+import { TextInput, Button, Select } from '@mantine/core';
+import useWebSocket from "react-use-websocket";
+import { buildings, subjects } from "./data";
+//import { auth } from "../firebase/firebase-config";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-const FilterForm: React.FC = () => {
-    const [showAdvanced, setShowAdvanced] = React.useState(false);
-
-    return (
-        <div className="w-1/5 p-4 m-4 rounded-xl border-gray-300 border-4 hidden lg:block">
-            <div className="flex flex-col justify-between align-middle items-center m-1 p-1"><TextInput className="w-full" placeholder={"Search"}/></div>
-            <Switch className="p-2" color="violet" checked={showAdvanced} onChange={(e) => setShowAdvanced(e.target.checked)} label={"Show advanced options?"}/>
-            {showAdvanced ? <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
-                <span className="font-bold text-lg">Filter</span>
-                <Select label="Area" placeholder="Pick where you want to be" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/>
-                <Select label="Location" placeholder="What building?" data={[{value: "tech", label: "Technological Institute"}, {value: "mudd", label: "Mudd Librar"},{value: "swift", label: "Swift Hall"}]}/>
-                <Select label="Subject" placeholder="Which subject are you studying?" data={[{value: "cs", label: "Computer Science"}, {value: "econ", label: "Economics"},{value: "physics", label: "Physics"}]}/>
-            </div> : ""}
-        </div>
-    );
+interface ClowderPacket {
+    uuid: string; // User ID
+    class: string; // Class number
+    subject: string; // CS, Bio, etc.
+    location: string; // Building name / name of the tree they are on
+    area: string; // NE, N, Center, SW, S
+    school: string; // WCAS or MEAS
+    status: string; // grinding? solo?
+    showpin: boolean; // whether user has a pin
+    pinlatitude: string; // latitude of user's pin
+    pinlongitude: string; // longitude of user's pin
+    timestamp: number; // unix timestamp
+    displayname: string; // the user's name
 }
 
-/**
-- User ID: id of the user
-- Class: the class the person is studying for
-- Subject: subject (cs, bio, whatever)
-- Location name: the physical name of where the person is (e.g. Mudd, Ford, etc.)
-- School name: WCAS/MEAS/SESP
-- Status: "grinding" / "solo"
-- Show pin: boolean, whether the person has a pin or not on the map
-- Pin lat/lon: self explanatory
-- Timestamp
- */
-const JoinForm: React.FC<{uuid: string}> = ({uuid}) => {
+type ClowderHashMap = Record<string, ClowderPacket>;
+
+const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callback}) => {
+    const [classNumber, setClassNumber] = React.useState<number | null>();
+
     const [className, setClassName] = React.useState("");
     const [subject, setClassSubject] = React.useState("");
     const [location, setLocation] = React.useState("");
@@ -40,7 +35,7 @@ const JoinForm: React.FC<{uuid: string}> = ({uuid}) => {
     const wsURI = "10.105.183.137:4000";
     const websocketUrl = `ws://${wsURI}/ws/broadcast`;
     const [messageHistory, setMessageHistory] = useState<Array<ClowderPacket>>([]);
-    const { sendMessage, lastMessage, readyState } = useWebSocket(websocketUrl, {
+    const { sendMessage, lastMessage } = useWebSocket(websocketUrl, {
         shouldReconnect: (closeEvent) => true,
     });
 
@@ -49,13 +44,15 @@ const JoinForm: React.FC<{uuid: string}> = ({uuid}) => {
         let p = messageHistory;
         messageHistory.push(JSON.parse(lastMessage.data));
         setMessageHistory(p);
+        let packets = getUniquePackets(p);
+        callback(packets);
         }
-    }, [lastMessage, setMessageHistory, messageHistory]);
+    }, [lastMessage]);
 
     useEffect(() => {
         const interval = setInterval(() => {
         if(uuid !== "" && !!className && !!subject && !!location && !!status && !!displayName) handleClickSendMessage();
-        }, 500);
+        }, 5000);
 
         return () => clearInterval(interval);
     });
@@ -84,22 +81,6 @@ const JoinForm: React.FC<{uuid: string}> = ({uuid}) => {
     };
 
     ////
-    interface ClowderPacket {
-        uuid: string; // User ID
-        class: string; // Class number
-        subject: string; // CS, Bio, etc.
-        location: string; // Building name / name of the tree they are on
-        area: string; // NE, N, Center, SW, S
-        school: string; // WCAS or MEAS
-        status: string; // grinding? solo?
-        showpin: boolean; // whether user has a pin
-        pinlatitude: string; // latitude of user's pin
-        pinlongitude: string; // longitude of user's pin
-        timestamp: number; // unix timestamp
-        displayname: string; // the user's name
-    }
-
-    type ClowderHashMap = Record<string, ClowderPacket>;
 
     const getUniquePackets = (packets: Array<ClowderPacket>): ClowderHashMap => {
         const currentTime = new Date().valueOf(); // current time
@@ -113,43 +94,69 @@ const JoinForm: React.FC<{uuid: string}> = ({uuid}) => {
     }
     ////
 
-    const connectionStatus = {
-        [ReadyState.CONNECTING]: 'Connecting',
-        [ReadyState.OPEN]: 'Open',
-        [ReadyState.CLOSING]: 'Closing',
-        [ReadyState.CLOSED]: 'Closed',
-        [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
-    }[readyState];
+    // const connectionStatus = {
+    //     [ReadyState.CONNECTING]: 'Connecting',
+    //     [ReadyState.OPEN]: 'Open',
+    //     [ReadyState.CLOSING]: 'Closing',
+    //     [ReadyState.CLOSED]: 'Closed',
+    //     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+    // }[readyState];
 
     return (
-        <div>
-            <div className="flex-row flex flex-wrap">
+        <div className="lg:w-1/5 w-full p-4 lg:m-4 rounded-xl border-gray-300 border-4 overflow-scroll">
+            <div className="flex flex-col justify-between align-middle items-center m-1 p-1"><TextInput className="w-full" placeholder={"Search"}/></div>
+            <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
+                <span className="font-bold text-lg">Filter</span>
+                <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/>
+                <Select label="Location" placeholder="Pick a building" data={buildings}/>
+                <Select label="Subject" placeholder="Pick a subject" data={subjects}/>
+                <TextInput label="Class" placeholder="Type a class number" type={"number"} value={classNumber || ""} onChange={(e: any) => setClassNumber(parseInt(e.target.value) || null)}/>
+            </div>
+            <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
+                <span className="font-bold text-lg">Join the clowd!</span>
                 <TextInput label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
                 <TextInput label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e.target.value)} className="m-1"/>
                 <TextInput label="Location" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e.target.value)} className="m-1"/>
                 <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <TextInput label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
                 <TextInput label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
+                <Button onClick={handleClickSendMessage} color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out w-full">Join</Button>
             </div>
-            
-            <Button color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out">Join</Button>
-       
-            {Object.keys(getUniquePackets(messageHistory)).reduce((acc, cur) => acc += " " + cur, "")}
         </div>
     );
 }
 
 export const AppWrapper: React.FC = () => {
-    return (
-        <div className="flex w-full h-screen">
-            <FilterForm/>
-            
-            <div className="w-full lg:w-4/5 m-4 flex flex-col lg:ml-0">
-                <div className="rounded-xl border-gray-300 border-4 p-4 h-fit">
-                    <JoinForm uuid="AA"/>
-                </div>
+    const [clowd, setClowd] = useState<ClowderHashMap | null>();
+    const [uuid, setUuid] = useState("ERROR");
+    const auth = getAuth();
+    const navigate = useNavigate();
 
-                <div className="mt-4 rounded-xl border-gray-300 border-4 p-4 h-full">
+    const setClowdCallback = (hashmap: ClowderHashMap) => {
+        setClowd(hashmap);
+    }
+    
+    useEffect(() => {
+        const user = auth.currentUser;
+        const user_id = user?.uid || "ERROR";
+
+        if(user_id === "ERROR") {
+            console.log("???");
+            navigate("/login");
+        }
+
+        setUuid(user_id);
+    },[auth, navigate]);
+
+    //console.log(clowd);
+
+    return (
+        <div className="flex flex-col lg:flex-row w-full h-screen">
+            <FilterForm uuid={uuid} callback={setClowdCallback}/>
+            
+            <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
+                <div className="rounded-xl border-gray-300 border-4 p-4 h-full">
+                    {clowd ? Object.keys(clowd) : ""}
                 </div>
             </div>
         </div>

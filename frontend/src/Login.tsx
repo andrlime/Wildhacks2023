@@ -8,6 +8,8 @@ import { FooterSimple } from './footer';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
+import catsvg from './Components/undraw_cat_epte.svg';
+import { FooterSimple } from './footer';
 
 
 
@@ -81,13 +83,13 @@ const logIn = () => {
   return (
     <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
-        <img src={logo} alt='Clowder Logo'/>
+        <img width={300} src={logo} alt='Clowder Logo'/>
         <div className='w-fit'>
-        <div className='absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
+        <div className='bg-white absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
               onClick={() => navigate("/")}>&#8678;&nbsp;&nbsp;<span 
               className='text-lg'>Go Back</span></div>
           <Autocomplete
-          style={{width: 350,}}
+          style={{width: 350}}
           value={email}
           data={data}
           onChange={handleChange}
@@ -110,7 +112,6 @@ const logIn = () => {
           color="violet"
           title='Sign Up'
           onClick={logIn}
-
           >
           Login
           </Button>
@@ -122,6 +123,7 @@ const logIn = () => {
           
       </MantineProvider>
       <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
+      <img className='absolute bottom-0 right-1 w-1/5 min-w-[200px]' src={catsvg} alt={"cat"}/>
     </div>
   );
 }

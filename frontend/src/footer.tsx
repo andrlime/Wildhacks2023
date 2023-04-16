@@ -6,9 +6,6 @@ import './LandingPage.css';
 const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: rem(120),
-    borderTop: `${rem(1)} solid ${
-      theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
   },
 
   inner: {
@@ -49,7 +46,7 @@ export function FooterSimple({ links }: FooterSimpleProps) {
   ));
 
   return (
-    <div className={classes.footer}>
+    <div className={classes.footer + " absolute bottom-0 invisible sm:visible w-full"}>
       <Container className={classes.inner}>
         <Image src={LOGO} style={{width: '100px'}}/>
         <Group className={classes.links}>{items}</Group>

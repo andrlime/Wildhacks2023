@@ -20,7 +20,6 @@ const useStyles = createStyles((theme) => ({
   inner: {
     position: 'relative',
     paddingTop: rem(200),
-    paddingBottom: rem(120),
 
     [theme.fn.smallerThan('sm')]: {
       paddingBottom: rem(80),
@@ -87,7 +86,7 @@ export const LandingPage: React.FC = () => {
         
         <h1 className={classes.title} style={{textAlign: "center"}}>
            <Text style={{ fontSize: 42, marginBottom: '-40px' }}>Spot Wildcats on Campus with</Text>
-           <Text component="span" style={{ fontSize: 150 }} variant="gradient" gradient={{ from: 'purple', to: 'cyan' }}>clowder</Text>
+           <Text component="span" className='m-2 text-[70px] md:text-[150px]' variant="gradient" gradient={{ from: 'purple', to: 'cyan' }}>clowder</Text>
         
         </h1>
         <Text className={classes.description} color="dimmed" style={{textAlign: "center", marginTop: '-20px'}}>
@@ -131,9 +130,10 @@ export const LandingPage: React.FC = () => {
 
         </div>
       </Container>
-      <div style={{alignSelf: 'center' }}>
-      <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '1000px' }} src={DEMO_IMAGE} alt="demo"/>
+      <div className='flex w-full justify-center h-[70vh]'>
+        <div className='bg-red-200 m-4 aspect-square max-w-[600px]' style={{backgroundImage: `url(${DEMO_IMAGE})`, backgroundSize: "cover"}}></div>
       </div>
+      {/* <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '100%', maxWidth: "800px" }} src={DEMO_IMAGE} alt="demo"/> */}
       <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
 
     </div>
