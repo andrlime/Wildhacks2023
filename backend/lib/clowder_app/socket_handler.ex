@@ -21,10 +21,12 @@ defmodule ClowderApp.SocketHandler do
 
   ## Handle websocket requests
   ## Based on the structure of the input JSON
+  ## Modified from https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778
+  ## Referenced Elixir docs
   def websocket_handle({:text, json}, state) do
-    IO.inspect(json, label: "❎ Got request. Payload")
+    IO.inspect(json, label: "❎ Got request. Payload") # Output to console
     case Jason.decode!(json) do
-      %{
+      %{ # Specify input data
         "area" => area,
         "class" => class,
         "location" => location,
@@ -38,7 +40,7 @@ defmodule ClowderApp.SocketHandler do
         "timestamp" => timestamp,
         "displayname" => displayname
       } ->
-        output_map = %{
+        output_map = %{ # Specify format for return data
           "area" => area,
           "class" => class,
           "location" => location,
@@ -58,27 +60,12 @@ defmodule ClowderApp.SocketHandler do
         |> Registry.dispatch(state.registry_key, fn entries ->
           for {pid, _} <- entries do
             if pid != self() do
-              Process.send(pid, output_json, []) # Send json to all processes
+              Process.send(pid, output_json, []) # Send json response to all processes
             end
           end
         end)
 
-        {:reply, {:text, output_json}, state} # Reply with the json to all processes
-
-      %{"msg" => message, "also" => also} -> # Test data structure
-        output_map = %{"name" => message, "firstletter" => also}
-        output_json = Jason.encode!(output_map)
-
-        Registry.ClowderApp
-        |> Registry.dispatch(state.registry_key, fn entries ->
-          for {pid, _} <- entries do
-            if pid != self() do
-              Process.send(pid, output_json, [])
-            end
-          end
-        end)
-
-        {:reply, {:text, output_json}, state}
+        {:reply, {:text, output_json}, state} # For good measure
 
       {:error, error_rsn} ->
         IO.puts(error_rsn)

@@ -9,3 +9,8 @@ By default this app will host on port 4000, which can be configured. The websock
 ws://(your local ip):4000
 ```
 and can be connected to via React or JS.
+
+## Sources
+- https://medium.com/@loganbbres/elixir-websocket-chat-example-c72986ab5778
+- Elixir documentation
+- Chat GPT 4 for some bug fixes
