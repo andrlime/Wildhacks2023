@@ -6,12 +6,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './Login';
 import LandingPage from './LandingPage';
 import { Home } from './Home';
-import EditProfile from './EditProfile';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <LandingPage/>,
   },
   {
     path: "/signup",

@@ -7,8 +7,6 @@ import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
 import AppWrapper from './Components/AppWrapper';
 import { FooterSimple } from './footer';
-
-import DisplayProfile from './DisplayProfile';
 import {UserProfile} from './UserProfile';
 import Profile from './Profile';
 
