@@ -152,7 +152,9 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
         setUuid(user_id);
     },[auth, navigate]);
 
-    //console.log(clowd);
+    useEffect(() => {
+        console.log(showMap);
+    },[showMap]);
 
     return (
         <div className="flex flex-col lg:flex-row w-full h-screen">
@@ -161,7 +163,7 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
             <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
                 <div className="rounded-xl border-gray-300 border-4 h-[50vh] lg:h-screen relative">
                     {/* {clowd ? Object.keys(clowd) + " " + clowd["Willie the Wildcat"].class : ""} */}
-                    {showMap ? <Map/> : ""}
+                    <Map s={showMap}/>
                 </div>
             </div>
         </div>
