@@ -85,9 +85,9 @@ export const Signup: React.FC = () => {
   }, [isSignedIn, navigate])
 
   return (
-    <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
+    <div className='flex flex-col justify-center items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
-          <img src={logo} alt='Clowder Logo'/>
+          <img width={300} src={logo} alt='Clowder Logo'/>
           <div className='w-fit'>
             <div className='absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
               onClick={() => navigate("/")}>&#8678;&nbsp;&nbsp;<span 
@@ -135,7 +135,7 @@ export const Signup: React.FC = () => {
             </Text>
           </div>
           
-          <img className='absolute bottom-0 right-1 w-1/5' src={catsvg} alt={"cat"}/>
+          <img className='absolute bottom-0 right-1 w-1/5 min-w-[200px]' src={catsvg} alt={"cat"}/>
           
       </MantineProvider>
       <br></br>
