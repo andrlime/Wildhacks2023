@@ -5,6 +5,7 @@ import { auth } from './firebase/firebase-config';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { redirect, useNavigate } from 'react-router-dom';
+import {FooterSimple} from './footer'
 
 
 export const Signup: React.FC = () => {
@@ -86,7 +87,7 @@ export const Signup: React.FC = () => {
   }, [isSignedIn])
 
   return (
-    <div className='flex justify-center items-center align-middle w-full h-screen'>
+    <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
           
           <div className='w-fit'>
@@ -133,6 +134,8 @@ export const Signup: React.FC = () => {
           </div>
           
       </MantineProvider>
+      <br></br>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
     </div>
   );
 }
