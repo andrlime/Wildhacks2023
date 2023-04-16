@@ -80,7 +80,7 @@ export const LandingPage: React.FC = () => {
   return (
 
     <div className={classes.wrapper} style={{backgroundImage:`url(${BACKGROUND})`,backgroundRepeat:"no-repeat",backgroundSize:"100%"}} >
-        <img src={require("./Components/logo.png")} alt="Logo" className="logo"/>
+        <img src={require("./Components/logo.png")} alt="Logo" className="logo hover:cursor-pointer"/>
 
       <Container size={700} className={classes.inner}>
         
@@ -130,8 +130,8 @@ export const LandingPage: React.FC = () => {
 
         </div>
       </Container>
-      <div className='flex w-full justify-center h-[70vh] pb-16'>
-        <div className='bg-red-200 m-4 aspect-square max-w-[600px]' style={{backgroundImage: `url(${DEMO_IMAGE})`, backgroundSize: "cover"}}></div>
+      <div className='flex w-full justify-center h-[90vh] pb-16'>
+        <div className='bg-red-200 m-4 aspect-square max-w-[800px] border-8 border-white' style={{backgroundImage: `url(${DEMO_IMAGE})`, backgroundSize: "cover"}}></div>
       </div>
       {/* <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '100%', maxWidth: "800px" }} src={DEMO_IMAGE} alt="demo"/> */}
       <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>

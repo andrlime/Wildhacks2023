@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
 import catsvg from './Components/undraw_cat_epte.svg';
 
-
-
 export const Login: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
   const [email, setEmail] = useState('');

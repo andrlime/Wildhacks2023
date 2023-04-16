@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Button, Select } from '@mantine/core';
+import { TextInput, Button, Select, Textarea } from '@mantine/core';
 import useWebSocket from "react-use-websocket";
 import { buildings, subjects } from "./data";
 //import { auth } from "../firebase/firebase-config";
@@ -32,6 +32,7 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
     const [location, setLocation] = React.useState("");
     const [status, setStatus] = React.useState("");
     const [displayName, setDisplayName] = React.useState("");
+    const [message, setMessage] = React.useState("");
 
     const wsURI = "10.105.183.137:4000";
     const websocketUrl = `ws://${wsURI}/ws/broadcast`;
@@ -73,7 +74,8 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
                     "pinlatitude": 41,
                     "pinlongitude": -87,
                     "timestamp": new Date().valueOf(),
-                    "displayname": displayName
+                    "displayname": displayName,
+                    "message": message
                 }
             ));
         } catch (e) {
@@ -121,13 +123,14 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
                 <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <TextInput label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
                 <TextInput label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
+                <Textarea label="Your message" placeholder="Your message goes here!" value={message} onChange={(e) => setMessage(e.target.value)}/>
                 <Button onClick={handleClickSendMessage} color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out w-full">Join</Button>
             </div>
         </div>
     );
 }
 
-export const AppWrapper: React.FC = () => {
+export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
     const [clowd, setClowd] = useState<ClowderHashMap | null>();
     const [uuid, setUuid] = useState("ERROR");
     const auth = getAuth();
@@ -156,9 +159,9 @@ export const AppWrapper: React.FC = () => {
             <FilterForm uuid={uuid} callback={setClowdCallback}/>
             
             <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
-                <div className="rounded-xl border-gray-300 border-4 h-full relative">
-                    {/*clowd ? Object.keys(clowd) : ""*/}
-                    <Map/>
+                <div className="rounded-xl border-gray-300 border-4 h-[50vh] lg:h-screen relative">
+                    {/* {clowd ? Object.keys(clowd) + " " + clowd["Willie the Wildcat"].class : ""} */}
+                    {showMap ? <Map/> : ""}
                 </div>
             </div>
         </div>

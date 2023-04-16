@@ -14,6 +14,8 @@ export const Home: React.FC = () => {
 
     const [profileOpened, { open : openProfile, close : closeProfile }] = useDisclosure(false);
     const [aboutOpened, { open: openAbout, close: closeAbout }] = useDisclosure(false);
+    const [showMapState, setShowMapState] = useState(true);
+
     const navigate = useNavigate();
     const signOut = () => {
         auth.signOut();
@@ -24,13 +26,19 @@ export const Home: React.FC = () => {
         <MantineProvider theme={{ colorScheme: 'light' }}>
             <div className='flex justify-between pt-4'>
                 <div>
-                    <img src={logo} className='pl-6' alt = "Clowder Logo" width={172} onClick={() => navigate('/')}/>
+                    <img src={logo} className='pl-6 hover:cursor-pointer' alt = "Clowder Logo" width={172} onClick={() => navigate('/')}/>
                 </div>
                 <div>
-                    <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
+                    <Modal opened={profileOpened} onClose={() => {
+                            closeProfile();
+                            setShowMapState(true);
+                        }} title="Profile" centered>
                         {/*Modal Content*/}
                     </Modal>
-                    <Modal opened={aboutOpened} onClose={closeAbout} title="About" centered>
+                    <Modal opened={aboutOpened} onClose={() => {
+                            closeAbout();
+                            setShowMapState(true);
+                        }} title="About" centered>
                         {/*Modal Content*/}
                     </Modal>
                     <Button
@@ -39,7 +47,11 @@ export const Home: React.FC = () => {
                         variant='filled'
                         color="violet"
                         title='Sign Out'
-                        onClick={openAbout}
+                        onClick={() => {
+                            openAbout();
+                            setShowMapState(false);
+                            console.log("HIDE");
+                        }}
                         >
                         About
                     </Button>
@@ -49,13 +61,16 @@ export const Home: React.FC = () => {
                         variant='filled'
                         color="violet"
                         title='Sign Out'
-                        onClick={openProfile}
+                        onClick={() => {
+                            openProfile();
+                            setShowMapState(false);
+                        }}
                         >
                         Profile
                     </Button>
                 </div>
             </div>
-            <AppWrapper/>
+            <AppWrapper showMap={showMapState}/>
         </MantineProvider>
     );
 }
