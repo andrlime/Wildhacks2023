@@ -6,6 +6,8 @@ import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
+import catsvg from './Components/undraw_cat_epte.svg';
+import { FooterSimple } from './footer';
 
 
 export const Login: React.FC = () => {
@@ -118,6 +120,9 @@ const logIn = () => {
         </div>
           
       </MantineProvider>
+      <br></br>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
+      <img className='absolute bottom-0 right-1 w-1/5' src={catsvg} alt={"cat"}/>
     </div>
   );
 }

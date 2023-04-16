@@ -7,8 +7,7 @@ import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
 import { FooterSimple } from './footer';
-
-
+import catsvg from './Components/undraw_cat_epte.svg';
 
 export const Signup: React.FC = () => {
   const timeoutRef = useRef<number>(-1);
@@ -135,6 +134,8 @@ export const Signup: React.FC = () => {
                 <Link to="/login">Already have an account? Log in!</Link>
             </Text>
           </div>
+          
+          <img className='absolute bottom-0 right-1 w-1/5' src={catsvg} alt={"cat"}/>
           
       </MantineProvider>
       <br></br>
