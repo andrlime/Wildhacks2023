@@ -9,6 +9,8 @@ import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
 
 import DisplayProfile from './DisplayProfile';
+import {UserProfile} from './UserProfile';
+import Profile from './Profile';
 
 
 export const Home: React.FC = () => {
@@ -21,6 +23,8 @@ export const Home: React.FC = () => {
         setTimeout(() => navigate("/login"), 5);
     }
 
+    const [userProfile, setUserProfile] = useState(new UserProfile("Willie Wildcat", "williewildcat2026@u.northwestern.edu", "McCormick", "IE", "123-456-7890", "Tech Atrium"));
+
     return (
         <MantineProvider theme={{ colorScheme: 'light' }}>
             <div className='flex justify-between pt-4'>
@@ -29,7 +33,7 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                     <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
-                        <DisplayProfile name="Willie Wildcat" email="williewildcat2026@u.northwestern.edu" school="McCormick" major="IE" phone="123-456-7890" favStudySpot="Tech Atrium" />
+                        <Profile/>
                     </Modal>
                     <Modal opened={aboutOpened} onClose={closeAbout} title="About" centered>
                         {/*Modal Content*/}
