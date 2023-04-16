@@ -91,8 +91,8 @@ export const Signup: React.FC = () => {
           <div className='w-fit'>
             <div className='absolute top-4 p-2 hover:bg-gray-100 transition-all cursor-pointer ease-in-out rounded-xl left-4 font-bold text-3xl flex align-middle items-center' 
               onClick={() => navigate("/")}>&#8678;&nbsp;&nbsp;<span 
-              className='text-lg'>Go Back</span></div>
-
+              className='text-lg'>Go Back</span>
+            </div>
             <Autocomplete
             style={{width: 350,}}
             value={email}
