@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaf
 import L from "leaflet";
 import PIN from './pin.png';
 import React from 'react';
-import { buildings, getBuildingName } from './data';
+import { getBuildingName } from './data';
 
 interface ClowderPacket {
     uuid: string; // User ID
@@ -19,6 +19,7 @@ interface ClowderPacket {
     timestamp: number; // unix timestamp
     displayname: string; // the user's name,
     message: string;
+    contact: string
 }
 
 type ClowderHashMap = Record<string, ClowderPacket>;
@@ -38,6 +39,8 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
         iconUrl: PIN,
         iconSize: [55, 55],
     });
+
+
 
     if(s.showMap) {
         return (
@@ -59,9 +62,13 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
                         }).map(e => (
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
-                                    <div className='font-bold'>{cloud[e].displayname} - {cloud[e].class} at {(getBuildingName(cloud[e].location))}</div>
+                                    <div className='font-bold flex flex-row'>
+                                        <span>{cloud[e].displayname} - {cloud[e].class} at {(getBuildingName(cloud[e].location))}</span>
+                                    </div>
                                     <div>Status: {cloud[e].status}</div>
                                     <div>Message: {cloud[e].message}</div>
+                                    <div>Contact: {cloud[e].contact}</div>
+                                    <div><span className='font-bold hover:cursor-pointer'>⚠️ Report User</span></div>
                                 </Popup>
                             </Marker>
                         ))}

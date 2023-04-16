@@ -20,7 +20,8 @@ interface ClowderPacket {
     pinlongitude: string; // longitude of user's pin
     timestamp: number; // unix timestamp
     displayname: string; // the user's name
-    message: string
+    message: string;
+    contact: string;
 }
 
 type ClowderHashMap = Record<string, ClowderPacket>;
@@ -34,6 +35,7 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
     const [status, setStatus] = React.useState("");
     const [displayName, setDisplayName] = React.useState("");
     const [message, setMessage] = React.useState("");
+    const [contactMethod, setContactMethod] = React.useState("");
 
     const wsURI = "10.105.183.137:4000";
     const websocketUrl = `ws://${wsURI}/ws/broadcast`;
@@ -85,7 +87,8 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
                         "pinlongitude": position?.lon,
                         "timestamp": new Date().valueOf(),
                         "displayname": displayName,
-                        "message": message
+                        "message": message,
+                        "contact": contactMethod
                     }
                 ));
             } catch (e) {
@@ -163,6 +166,8 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
                 <TextInput required error={!className ? "Enter a class name" : ""} label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
                 <Select required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e + "")} className="m-1" data={buildings}/>
                 <TextInput required error={!displayName ? "Enter a display name" : ""} label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
+                <TextInput required error={!contactMethod ? "Type a contact method" : ""} value={contactMethod} label="Your contact" placeholder="example@northwestern.edu" onChange={(e) => setContactMethod(e.target.value)} className="m-1"/>
+                
                 <TextInput required error={!position ? "Click on the map!" : ""} disabled value={position ? `${position.lat} ${position.lon}` : ""} label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
                 <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <Textarea label="Your message" placeholder="Your message goes here!" value={message} onChange={(e) => setMessage(e.target.value)}/>
