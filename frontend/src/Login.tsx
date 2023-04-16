@@ -2,10 +2,13 @@ import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text } fr
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
+import { ButtonGroup } from '@mantine/core/lib/Button/ButtonGroup/ButtonGroup';
+import { FooterSimple } from './footer';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
+
 
 
 export const Login: React.FC = () => {
@@ -76,7 +79,7 @@ const logIn = () => {
   }, [isSignedIn, navigate])
 
   return (
-    <div className='flex flex-col justify-center items-center align-middle w-full h-screen'>
+    <div className='flex justify-center flex-col items-center align-middle w-full h-screen'>
       <MantineProvider withGlobalStyles withNormalizeCSS theme={{colorScheme: 'light'}}>
         <img src={logo} alt='Clowder Logo'/>
         <div className='w-fit'>
@@ -118,6 +121,7 @@ const logIn = () => {
         </div>
           
       </MantineProvider>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
     </div>
   );
 }
