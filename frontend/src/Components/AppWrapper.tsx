@@ -24,7 +24,9 @@ interface ClowderPacket {
 
 type ClowderHashMap = Record<string, ClowderPacket>;
 
-const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callback}) => {
+type Position = {lat: number, lon: number};
+
+const FilterForm: React.FC<{uuid: string, callback: Function, position: Position | null}> = ({uuid, callback, position}) => {
     const [classNumber, setClassNumber] = React.useState<number | null>();
 
     const [className, setClassName] = React.useState("");
@@ -41,6 +43,8 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
         shouldReconnect: (closeEvent) => true,
     });
 
+    const [joined, setJoined] = useState(false);
+
     useEffect(() => {
         if (lastMessage !== null) {
         let p = messageHistory;
@@ -52,34 +56,42 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
     }, [lastMessage]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-        if(uuid !== "" && !!className && !!subject && !!location && !!status && !!displayName) handleClickSendMessage();
-        }, 5000);
-
-        return () => clearInterval(interval);
+        if(joined) {
+            const interval = setInterval(() => {
+                if(uuid !== "" && !!className && !!subject && !!location && !!displayName && !!position) handleClickSendMessage();
+            }, 1000);
+    
+            return () => clearInterval(interval);
+        }
     });
 
-    const handleClickSendMessage = () => {
-        try {
-            sendMessage(JSON.stringify(
-                {
-                    "uuid": displayName, // change to uuid
-                    "class": className,
-                    "subject": subject,
-                    "location": location,
-                    "area": "Evanston Campus",
-                    "school": "Northwestern",
-                    "status": status,
-                    "showpin": true,
-                    "pinlatitude": 41,
-                    "pinlongitude": -87,
-                    "timestamp": new Date().valueOf(),
-                    "displayname": displayName,
-                    "message": message
-                }
-            ));
-        } catch (e) {
-            console.error(e); // handle errors here
+    const handleClickSendMessage = (a?: number) => {
+        if(a === 1) {
+            setJoined(false);
+            return;
+        } else if(uuid !== "" && !!className && !!subject && !!location && !!displayName && !!position) {
+            setJoined(true);
+            try {
+                sendMessage(JSON.stringify(
+                    {
+                        "uuid": displayName, // change to uuid
+                        "class": className,
+                        "subject": subject,
+                        "location": location,
+                        "area": "Evanston Campus",
+                        "school": "Northwestern",
+                        "status": status,
+                        "showpin": true,
+                        "pinlatitude": position?.lat,
+                        "pinlongitude": position?.lon,
+                        "timestamp": new Date().valueOf(),
+                        "displayname": displayName,
+                        "message": message
+                    }
+                ));
+            } catch (e) {
+                console.error(e); // handle errors here
+            }
         }
     };
 
@@ -117,14 +129,14 @@ const FilterForm: React.FC<{uuid: string, callback: Function}> = ({uuid, callbac
             </div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Join the clowd!</span>
-                <TextInput label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
-                <TextInput label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e.target.value)} className="m-1"/>
-                <TextInput label="Location" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e.target.value)} className="m-1"/>
+                <TextInput required error={!className ? "Enter a class name" : ""} label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
+                <TextInput required error={!subject ? "Enter a subject" : ""} label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e.target.value)} className="m-1"/>
+                <TextInput required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e.target.value)} className="m-1"/>
                 <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
-                <TextInput label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
-                <TextInput label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
+                <TextInput required error={!displayName ? "Enter a display name" : ""} label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
+                <TextInput required error={!position ? "Click on the map!" : ""} disabled value={position ? `${position.lat} ${position.lon}` : ""} label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
                 <Textarea label="Your message" placeholder="Your message goes here!" value={message} onChange={(e) => setMessage(e.target.value)}/>
-                <Button onClick={handleClickSendMessage} color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out w-full">Join</Button>
+                <Button onClick={() => handleClickSendMessage(joined ? 1 : 0)} color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out w-full">{joined ? "Leave" : "Join"}</Button>
             </div>
         </div>
     );
@@ -135,9 +147,14 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
     const [uuid, setUuid] = useState("ERROR");
     const auth = getAuth();
     const navigate = useNavigate();
+    const [posn, setPosn] = useState<Position | null>();
 
     const setClowdCallback = (hashmap: ClowderHashMap) => {
         setClowd(hashmap);
+    }
+
+    const setPosnCallback = (position: Position) => {
+        setPosn(position);
     }
     
     useEffect(() => {
@@ -158,12 +175,11 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
 
     return (
         <div className="flex flex-col lg:flex-row w-full h-screen">
-            <FilterForm uuid={uuid} callback={setClowdCallback}/>
+            <FilterForm position={posn ? posn : null} uuid={uuid} callback={setClowdCallback}/>
             
             <div className="w-full lg:w-4/5 lg:m-4 mt-2 flex flex-col">
                 <div className="rounded-xl border-gray-300 border-4 h-[50vh] lg:h-screen relative">
-                    {/* {clowd ? Object.keys(clowd) + " " + clowd["Willie the Wildcat"].class : ""} */}
-                    <Map s={showMap}/>
+                    <Map cb={setPosnCallback} s={showMap} cloud={clowd || null}/>
                 </div>
             </div>
         </div>
