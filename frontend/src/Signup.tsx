@@ -6,6 +6,8 @@ import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/aut
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
+import { FooterSimple } from './footer';
+
 
 
 export const Signup: React.FC = () => {
@@ -135,6 +137,8 @@ export const Signup: React.FC = () => {
           </div>
           
       </MantineProvider>
+      <br></br>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import './LandingPage.css';
 import { redirect, useNavigate } from 'react-router-dom';
-
+import {FooterSimple} from './footer'
+import DEMO_IMAGE from './Components/demo.png';
 
 
 import { createStyles, Container, Text, Button, Group, rem, LoadingOverlay } from '@mantine/core';
+import React from 'react';
 
 
 const useStyles = createStyles((theme) => ({
@@ -126,8 +128,10 @@ export const LandingPage: React.FC = () => {
         </div>
       </Container>
       <div style={{alignSelf: 'center' }}>
-      <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '1000px' }} src={require("./Components/demo.png")} alt="demo"/>
+      <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '1000px' }} src={DEMO_IMAGE} alt="demo"/>
       </div>
+      <FooterSimple links= {[{link: "", label: ""}, {link: "", label: "WildHacks2023"}] }/>
+
     </div>
   );
 }
