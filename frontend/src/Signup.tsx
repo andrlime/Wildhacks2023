@@ -1,10 +1,10 @@
-import { MantineProvider, Autocomplete, Loader, TextInput, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
+import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { redirect, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { BrowserRouter as _, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Signup: React.FC = () => {
@@ -13,11 +13,8 @@ export const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<string[]>([]);
   const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
-
-  const [alertMsg, setAlertMsg] = useState('');
 
   //This code is from https://github.com/rtivital, the developer of Mantine
   const handleChange = (val: string) => {
@@ -83,7 +80,7 @@ export const Signup: React.FC = () => {
             navigate("/home");
         }
     })
-  }, [isSignedIn])
+  }, [isSignedIn, navigate])
 
   return (
     <div className='flex justify-center items-center align-middle w-full h-screen'>
