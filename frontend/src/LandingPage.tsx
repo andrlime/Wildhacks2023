@@ -85,7 +85,7 @@ export const LandingPage: React.FC = () => {
         
         </h1>
         <Text className={classes.description} color="dimmed" style={{textAlign: "center", marginTop: '-20px'}}>
-            Clowder is a live map for Northwestern Students to find and meet Wildcats to study, hangout, and explore together
+            Clowder is a live map for Northwestern Students to find and meet fellow 'Cats to study, hangout, and explore together.
         </Text>
         <div style={{textAlign: "center"}} className={classes.controls}>
 
