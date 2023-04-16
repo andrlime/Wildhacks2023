@@ -19,19 +19,21 @@ export const Home: React.FC = () => {
 
     return (
         <MantineProvider theme={{ colorScheme: 'light' }}>
-            <Modal opened={opened} onClose={close} title="Profile" centered>
-                {/*Modal Content*/}
-            </Modal>
-            <Button
-                style={{width: "fit-content",}}
-                className='bg-purple-500 hover:bg-purple-700'
-                variant='filled'
-                color="violet"
-                title='Sign Out'
-                onClick={open}
-                >
-                Profile
-            </Button>
+            <div className='flex justify-end'>
+                <Modal opened={opened} onClose={close} title="Profile" centered>
+                    {/*Modal Content*/}
+                </Modal>
+                <Button
+                    style={{width: "fit-content",}}
+                    className='bg-purple-500 hover:bg-purple-700 self-end m-3'
+                    variant='filled'
+                    color="violet"
+                    title='Sign Out'
+                    onClick={open}
+                    >
+                    Profile
+                </Button>
+            </div>
         </MantineProvider>
     );
 }
