@@ -6,11 +6,13 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } fro
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { redirect, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
+import logo from './Components/logo.png';
 
 
 export const Home: React.FC = () => {
 
-    const [opened, { open, close }] = useDisclosure(false);
+    const [profileOpened, { open : openProfile, close : closeProfile }] = useDisclosure(false);
+    const [aboutOpened, { open: openAbout, close: closeAbout }] = useDisclosure(false);
     const navigate = useNavigate();
     const signOut = () => {
         auth.signOut();
@@ -19,19 +21,39 @@ export const Home: React.FC = () => {
 
     return (
         <MantineProvider theme={{ colorScheme: 'light' }}>
-            <Modal opened={opened} onClose={close} title="Profile" centered>
-                {/*Modal Content*/}
-            </Modal>
-            <Button
-                style={{width: "fit-content",}}
-                className='bg-purple-500 hover:bg-purple-700'
-                variant='filled'
-                color="violet"
-                title='Sign Out'
-                onClick={open}
-                >
-                Profile
-            </Button>
+            <div className='flex justify-between pt-4'>
+                <div>
+                    <img src={logo} className='pl-6' alt = "Clowder Logo" width={172}/>
+                </div>
+                <div>
+                    <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
+                        {/*Modal Content*/}
+                    </Modal>
+                    <Modal opened={aboutOpened} onClose={closeAbout} title="About" centered>
+                        {/*Modal Content*/}
+                    </Modal>
+                    <Button
+                        style={{width: "fit-content",}}
+                        className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
+                        variant='filled'
+                        color="violet"
+                        title='Sign Out'
+                        onClick={openAbout}
+                        >
+                        About
+                    </Button>
+                    <Button
+                        style={{width: "fit-content",}}
+                        className='hover:bg-purple-700 self-end m-4 text-gray-500 hover:text-gray-100 transition-all ease-in-out text-2xl mr-8'
+                        variant='filled'
+                        color="violet"
+                        title='Sign Out'
+                        onClick={openProfile}
+                        >
+                        Profile
+                    </Button>
+                </div>
+            </div>
         </MantineProvider>
     );
 }
