@@ -8,11 +8,12 @@ import Login from './Login';
 import LandingPage from './LandingPage';
 import { AppWrapper } from './Components/AppWrapper';
 import { Home } from './Home';
+import EditProfile from './EditProfile';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage/>,
+    element: <Home/>,
   },
   {
     path: "/signup",
@@ -31,7 +32,8 @@ const router = createBrowserRouter([
     element: <LandingPage/>,
   },
   { path: "/home",
-    element: <Home/>,}
+    element: <Home/>},
+  
 ]);
 
 const root = ReactDOM.createRoot(

@@ -8,6 +8,8 @@ import { redirect, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import logo from './Components/logo.png';
 
+import DisplayProfile from './DisplayProfile';
+
 
 export const Home: React.FC = () => {
 
@@ -27,7 +29,7 @@ export const Home: React.FC = () => {
                 </div>
                 <div>
                     <Modal opened={profileOpened} onClose={closeProfile} title="Profile" centered>
-                        {/*Modal Content*/}
+                        <DisplayProfile name="Willie Wildcat" email="williewildcat2026@u.northwestern.edu" school="McCormick" major="IE" phone="123-456-7890" favStudySpot="Tech Atrium" />
                     </Modal>
                     <Modal opened={aboutOpened} onClose={closeAbout} title="About" centered>
                         {/*Modal Content*/}
