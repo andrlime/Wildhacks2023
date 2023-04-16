@@ -102,7 +102,7 @@ export const Signup: React.FC = () => {
             placeholder="Your password"
             value={password}
             onChange={(e) => {setPassword(e.target.value)}}
-            error={password.length > 6 && password.length !== 0 ? "" : "Password must be at least 6 characters long"}
+            error={password.length < 6 && password.length !== 0 ? "Password must be at least 6 characters long" : ""}
             />
             <PasswordInput
             style={{width: 350,}}
