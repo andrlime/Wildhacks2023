@@ -78,7 +78,7 @@ export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div className={classes.wrapper}>
-        <img src={require("./logo.png")} alt="Logo" className="logo" />
+        <img src={require("./Components/logo.png")} alt="Logo" className="logo" />
       <Container size={700} className={classes.inner}>
         
         <h1 className={classes.title} style={{textAlign: "center"}}>
@@ -87,7 +87,7 @@ export const LandingPage: React.FC = () => {
         
         </h1>
         <Text className={classes.description} color="dimmed" style={{textAlign: "center", marginTop: '-20px'}}>
-            Clowder is a live map for Northwestern Students to find and meet Wildcats to study, hangout, and explore together
+            Clowder is a live map for Northwestern Students to find and meet fellow 'Cats to study, hangout, and explore together.
         </Text>
         <div style={{textAlign: "center"}} className={classes.controls}>
 
