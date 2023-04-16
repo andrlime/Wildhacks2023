@@ -76,7 +76,7 @@ export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div className={classes.wrapper}>
-        <img src={require("./logo.png")} alt="Logo" className="logo" />
+        <img src={require("./Components/logo.png")} alt="Logo" className="logo" />
       <Container size={700} className={classes.inner}>
         
         <h1 className={classes.title} style={{textAlign: "center"}}>
@@ -126,7 +126,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </Container>
       <div style={{alignSelf: 'center' }}>
-      <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '1000px' }} src={require("./demo.png")} alt="demo"/>
+      <img className="demo" style={{alignSelf: 'center', marginTop: '-100px', width: '1000px' }} src={require("./Components/demo.png")} alt="demo"/>
       </div>
     </div>
   );
