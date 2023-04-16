@@ -118,34 +118,53 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
     const [filter_b, set_f_b] = useState("");
     const [filter_s, set_f_s] = useState("");
     const [filter_c, set_f_c] = useState("");
+    
+    
 
     return (
         <div className="lg:w-1/5 w-full p-4 lg:m-4 rounded-xl border-gray-300 border-4 overflow-scroll">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
             {/* <div className="flex flex-col justify-between align-middle items-center m-1 p-1"><TextInput className="w-full" placeholder={"Search"}/></div> */}
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
-                <span className="font-bold text-lg">Filter</span>
+                <div className="flex flex-row justify-between"><span className="font-bold text-lg">Filter</span><span className="hover:cursor-pointer" onClick={() => {
+                    set_f_b("");
+                    set_f_s("");
+                    set_f_c("");
+                }}>Reset</span></div>
                 {/* <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/> */}
-                <Select label="Building" placeholder="Pick a building" data={buildings} value={filter_b} onChange={(e) => {
-                    set_f_b(e + "");
-                    setFilter(e + "", filter_s, filter_c);
-                }} />
-                <Select label="Subject" placeholder="Pick a subject" data={subjects} value={filter_s} onChange={(e) => {
-                    set_f_s(e + "");
-                    setFilter(filter_b, e + "", filter_c);
-                }} />
-                <TextInput label="Class" placeholder="Type a class name" value={filter_c} onChange={(e) => {
-                    set_f_c(e.target.value + "");
-                    setFilter(filter_b, filter_s, e + "");
-                }}/>
+                <div className="flex flex-row align-middle items-end">
+                    <Select label="Department" placeholder="Pick a subject" data={subjects} value={filter_s} onChange={(e) => {
+                        set_f_s(e + "");
+                        setFilter(filter_b, e + "", filter_c);
+                    }} /> <i className="material-icons hover:cursor-pointer" onClick={() => {
+                        set_f_s("");
+                    }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
+                </div>
+                <div className="flex flex-row align-middle items-end">
+                    <TextInput label="Class Name" placeholder="Type a class name" value={filter_c} onChange={(e) => {
+                        set_f_c(e.target.value + "");
+                        setFilter(filter_b, filter_s, e + "");
+                    }}/> <i className="material-icons hover:cursor-pointer" onClick={() => {
+                        set_f_c("");
+                    }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
+                </div>
+                <div className="flex flex-row align-middle items-end">
+                    <Select label="Building" placeholder="Pick a building" data={buildings} value={filter_b} onChange={(e) => {
+                        set_f_b(e + "");
+                        setFilter(e + "", filter_s, filter_c);
+                    }} /> <i className="material-icons hover:cursor-pointer" onClick={() => {
+                        set_f_b("");
+                    }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
+                </div>
             </div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Join the clowd!</span>
+                <Select required error={!subject ? "Enter a subject" : ""} label="Department" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e + "")} className="m-1" data={subjects}/>
                 <TextInput required error={!className ? "Enter a class name" : ""} label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
-                <Select required error={!subject ? "Enter a subject" : ""} label="Subject" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e + "")} className="m-1" data={subjects}/>
                 <Select required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e + "")} className="m-1" data={buildings}/>
-                <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <TextInput required error={!displayName ? "Enter a display name" : ""} label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
                 <TextInput required error={!position ? "Click on the map!" : ""} disabled value={position ? `${position.lat} ${position.lon}` : ""} label="Your coordinates" placeholder="Click on the map!" className="m-1"/>
+                <TextInput label="Status" placeholder="Suffering" value={status} onChange={(e) => setStatus(e.target.value)} className="m-1"/>
                 <Textarea label="Your message" placeholder="Your message goes here!" value={message} onChange={(e) => setMessage(e.target.value)}/>
                 <Button onClick={() => handleClickSendMessage(joined ? 1 : 0)} color="violet" variant="light" className="m-1 bg-purple-100 hover:bg-purple-200 border-4 transition-all ease-in-out w-full">{joined ? "Leave" : "Join"}</Button>
             </div>

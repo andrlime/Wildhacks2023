@@ -10,6 +10,7 @@ export const subjects = [
     {value: "ENV_SCI", label: "Environmental Science"},
     {value: "SOC", label: "Sociology"},
     {value: "INTL_ST", label: "International Studies"},
+    {value: "FR", label: "French"},
     {value: "CLUB", label: "Extracurricular Activity"}
 ].sort((a,b) => a.value.localeCompare(b.value));
 

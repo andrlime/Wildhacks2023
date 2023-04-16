@@ -60,7 +60,8 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
                                     <div className='font-bold'>{cloud[e].displayname} - {cloud[e].class} at {(getBuildingName(cloud[e].location))}</div>
-                                    <div>{cloud[e].message}</div>
+                                    <div>Status: {cloud[e].status}</div>
+                                    <div>Message: {cloud[e].message}</div>
                                 </Popup>
                             </Marker>
                         ))}
