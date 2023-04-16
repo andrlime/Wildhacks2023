@@ -5,6 +5,7 @@ import { auth } from './firebase/firebase-config';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FooterSimple } from './footer';
 
 
 export const Signup: React.FC = () => {

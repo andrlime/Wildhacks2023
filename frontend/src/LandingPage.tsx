@@ -1,7 +1,7 @@
 import './LandingPage.css';
 import { redirect, useNavigate } from 'react-router-dom';
 import {FooterSimple} from './footer'
-import DEMO_IMAGE from './demo.png';
+import DEMO_IMAGE from './Components/demo.png';
 
 
 import { createStyles, Container, Text, Button, Group, rem, LoadingOverlay } from '@mantine/core';
