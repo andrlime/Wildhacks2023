@@ -133,6 +133,7 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
                     set_f_b("");
                     set_f_s("");
                     set_f_c("");
+                    setFilter(["", "", ""])
                 }}>Reset</span></div>
                 {/* <Select label="Area" placeholder="Pick a campus" data={[{value: "north", label: "North Campus"}, {value: "south", label: "South Campus"},{value: "chicago", label: "Chicago Campus"}]}/> */}
                 <div className="flex flex-row align-middle items-end">
@@ -141,14 +142,16 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
                         setFilter(filter_b, e + "", filter_c);
                     }} /> <i className="material-icons hover:cursor-pointer" onClick={() => {
                         set_f_s("");
+                        setFilter(filter_b, "", filter_c);
                     }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
                 </div>
                 <div className="flex flex-row align-middle items-end">
-                    <TextInput label="Class Name" placeholder="Type a class name" value={filter_c} onChange={(e) => {
+                    <TextInput label="Class Number" placeholder="Type a class number" type={"number"} value={filter_c} onChange={(e) => {
                         set_f_c(e.target.value + "");
-                        setFilter(filter_b, filter_s, e + "");
+                        setFilter(filter_b, filter_s, e.target.value + "");
                     }}/> <i className="material-icons hover:cursor-pointer" onClick={() => {
                         set_f_c("");
+                        setFilter(filter_b, filter_s, "");
                     }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
                 </div>
                 <div className="flex flex-row align-middle items-end">
@@ -157,13 +160,14 @@ const FilterForm: React.FC<{uuid: string, callback: Function, position: Position
                         setFilter(e + "", filter_s, filter_c);
                     }} /> <i className="material-icons hover:cursor-pointer" onClick={() => {
                         set_f_b("");
+                        setFilter("", filter_s, filter_c);
                     }} style={{fontSize: "16pt", padding: "0.1rem"}}>refresh</i>
                 </div>
             </div>
             <div className="m-1 mt-4 border-gray-300 border-2 rounded-xl p-4">
                 <span className="font-bold text-lg">Join the clowd!</span>
-                <Select required error={!subject ? "Enter a subject" : ""} label="Department" placeholder="EA" value={subject} onChange={(e) => setClassSubject(e + "")} className="m-1" data={subjects}/>
-                <TextInput required error={!className ? "Enter a class name" : ""} label="Class Name" placeholder="CS 212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
+                <Select required error={!subject ? "Enter a subject" : ""} label="Department" placeholder="CS" value={subject} onChange={(e) => setClassSubject(e + "")} className="m-1" data={subjects}/>
+                <TextInput required error={!className ? "Enter a class number" : ""} label="Class Number" type={"number"} placeholder="212" value={className} onChange={(e) => setClassName(e.target.value)} className="m-1"/>
                 <Select required error={!location ? "Enter a location" : ""} label="Building" placeholder="Mudd Library" value={location} onChange={(e) => setLocation(e + "")} className="m-1" data={buildings}/>
                 <TextInput required error={!displayName ? "Enter a display name" : ""} label="Your display name?" placeholder="Willie the Wildcat" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="m-1"/>
                 <TextInput required error={!contactMethod ? "Type a contact method" : ""} value={contactMethod} label="Your contact" placeholder="example@northwestern.edu" onChange={(e) => setContactMethod(e.target.value)} className="m-1"/>
@@ -199,11 +203,15 @@ export const AppWrapper: React.FC<{showMap: boolean}> = (showMap) => {
         const user_id = user?.uid || "ERROR";
 
         if(user_id === "ERROR") {
-            console.log("???");
+            // setUuid(() => {
+            //     let a = (Math.random()*12345678).toString(32);
+            //     console.log(a);
+            //     return a;
+            // });
             navigate("/login");
+        } else {
+            setUuid(user_id);
         }
-
-        setUuid(user_id);
     },[auth, navigate]);
 
     return (

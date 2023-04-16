@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Popup, Marker, useMapEvents } from 'react-leaf
 import L from "leaflet";
 import PIN from './pin.png';
 import React, { useEffect } from 'react';
-import { getBuildingName } from './data';
+import { getBuildingName, getSubject } from './data';
 
 interface ClowderPacket {
     uuid: string; // User ID
@@ -43,8 +43,8 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
     const [blocked, setBlocked] = React.useState([""]);
 
     useEffect(() => {
-        console.log(blocked);
-    },[blocked]);
+        console.log(filter);
+    },[filter]);
 
     if(s.showMap) {
         return (
@@ -68,7 +68,7 @@ export const Map: React.FC<{s: any, cb: Function, cloud: ClowderHashMap | null, 
                             <Marker position={[parseFloat(cloud[e].pinlatitude + ""), parseFloat(cloud[e].pinlongitude + "")]} icon={myIcon}>
                                 <Popup>
                                     <div className='font-bold flex flex-row'>
-                                        <span>{cloud[e].displayname} - {cloud[e].class} at {(getBuildingName(cloud[e].location))}</span>
+                                        <span>{cloud[e].displayname} - {getSubject(cloud[e].subject)} {cloud[e].class} at {(getBuildingName(cloud[e].location))}</span>
                                     </div>
                                     <div>Status: {cloud[e].status}</div>
                                     <div>Message: {cloud[e].message}</div>
