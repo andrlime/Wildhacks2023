@@ -1,8 +1,8 @@
-import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
+import { MantineProvider, Autocomplete, Loader, PasswordInput, Button, Text, Input, TextInput } from '@mantine/core'; // Mantine is a React UI library from https://github.com/rtivital
 import React, {useState, useEffect, useRef} from 'react';
 import './index.css';
 import { auth } from './firebase/firebase-config';
-import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { BrowserRouter as _, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import logo from './Components/logo.png';
@@ -17,6 +17,7 @@ export const Signup: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [name, setName] = useState('');
 
   //This code is from https://github.com/rtivital, the developer of Mantine
   const handleChange = (val: string) => {
@@ -45,33 +46,39 @@ export const Signup: React.FC = () => {
 //     return unsubscribe;
 //   })
   
-  const signUp = async() => {
-    if (password !== confirmPassword) {
-      alert("Passwords don't match!");
-      return;
-    }
-    if (email === '') {
-      alert("Please enter an email!");
-      return;
-    }
-    if (password === '') {
-      alert("Please enter a password!");
-      return;
-    }
-    if (confirmPassword === '') {
-      alert("Please confirm your password!");
-      return;
-    }
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Account created with: ', user.email);
-        setIsSignedIn(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+const signUp = async() => {
+  if (password !== confirmPassword) {
+    alert("Passwords don't match!");
+    return;
   }
+  if (email === '') {
+    alert("Please enter an email!");
+    return;
+  }
+  if (password === '') {
+    alert("Please enter a password!");
+    return;
+  }
+  if (name === '') {
+    alert("Please enter a name!");
+    return;
+  }
+  if (confirmPassword === '') {
+    alert("Please confirm your password!");
+    return;
+  }
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log('Account created with: ', user.email);
+      setIsSignedIn(true);
+      updateProfile(user, { displayName: name })
+      // Signed in
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 
   const navigate = useNavigate();
 
@@ -101,6 +108,13 @@ export const Signup: React.FC = () => {
             rightSection={loading ? <Loader size="1rem" /> : null}
             label="Email"
             placeholder="Your email"
+            />
+            <TextInput
+            style={{width: 350,}}
+            label="Name"
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => {setName(e.target.value)}}
             />
             <PasswordInput
             style={{width: 350,}}

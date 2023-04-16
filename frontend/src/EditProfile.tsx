@@ -3,6 +3,8 @@ import {useState} from 'react'
 import {UserProfile} from './UserProfile'
 import { Modal, MantineProvider, Button} from '@mantine/core';
 import './Profile.css'
+import { auth } from './firebase/firebase-config';
+import { error } from 'console';
 
 interface SaveProfileFunc
 {
@@ -25,6 +27,13 @@ const EditProfile : React.FunctionComponent<EditProfileProps> = (props) => {
     const [major, setMajor] = useState(userProfile.major);
     const [phone, setPhone] = useState(userProfile.phone);
     const [favStudySpot, setFavStudySpot] = useState(userProfile.favStudySpot);
+    const user = auth.currentUser;
+
+    if (user) {
+        console.log(user.email);
+    } else {
+        console.log("User is not logged in");
+    }
 
     return (
         <MantineProvider>
@@ -33,7 +42,7 @@ const EditProfile : React.FunctionComponent<EditProfileProps> = (props) => {
             <br/>
             <br/>
             <p><b>Email:</b></p>
-            <input type="text" className="longtextbox" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+            <p>{user?.email}</p>
             <br/><br/>
             <p><b>School: </b></p>
             <input type="text" className="longtextbox" value={school} onChange={(e) => setSchool(e.target.value)}></input>
