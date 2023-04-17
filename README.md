@@ -2,7 +2,7 @@
 We created Clowder for Northwestern WildHacks 2023. This project won first prize, and here we are archiving our submission AS IS. If we make iterations on this project in the future, we will create a separate branch at the very least. 
 
 ## Our video
-[[Clowder]](https://www.youtube.com/watch?v=rIFhqEU1GEA)
+[Clowder: YouTube video](https://www.youtube.com/watch?v=rIFhqEU1GEA)
 
 ## Inspiration
 We have all been in a situation where we wanted to study for a class but didn't have anyone to study with at the time. Studying with friends is crucial; you can bounce ideas, practice explaining topics, among many other things. Clowder can help students find other students studying for the same class at any time, creating a space for both academic and social support. The inspiration for the web app name comes from an antiquated word, clowder, referring to a group of cats. As the goal of the app is to bring together us 'Cats, we figured the term was purr-fect :)
